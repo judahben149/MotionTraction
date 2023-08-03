@@ -45,6 +45,9 @@ dependencies {
     val hiltVersion = "2.46.1"
     val lifecycleVersion = "2.6.1"
     val roomVersion = "2.5.2"
+    val retrofitVersion = "2.9.0"
+    val okhttpVersion = "4.10.0"
+    val gsonVersion = "2.9.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -70,6 +73,14 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-paging:$roomVersion")
+
+    //Retrofit & OkHttp
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
+    implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
+
+    //Gson
+    implementation("com.squareup.retrofit2:converter-gson:$gsonVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
