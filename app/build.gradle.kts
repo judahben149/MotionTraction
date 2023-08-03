@@ -48,6 +48,7 @@ dependencies {
     val retrofitVersion = "2.9.0"
     val okhttpVersion = "4.10.0"
     val gsonVersion = "2.9.0"
+    val pagingVersion = "3.2.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -81,6 +82,10 @@ dependencies {
 
     // Gson
     implementation("com.squareup.retrofit2:converter-gson:$gsonVersion")
+
+    // Paging 3
+    implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
+    implementation("androidx.paging:paging-common-ktx:$pagingVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
