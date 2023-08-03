@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    val timberVersion = "5.0.1"
     val hiltVersion = "2.46.1"
     val lifecycleVersion = "2.6.1"
     val roomVersion = "2.5.2"
@@ -51,6 +52,9 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
+
+    //Timber
+    implementation("com.jakewharton.timber:timber:$timberVersion")
 
     //hilt
     implementation("com.google.dagger:hilt-android:$hiltVersion")
