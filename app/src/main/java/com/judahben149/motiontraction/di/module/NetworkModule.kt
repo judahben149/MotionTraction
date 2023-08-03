@@ -1,13 +1,11 @@
 package com.judahben149.motiontraction.di.module
 
-import android.content.Context
 import com.judahben149.motiontraction.BuildConfig
 import com.judahben149.motiontraction.data.remote.MovieService
 import com.judahben149.motiontraction.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -22,7 +20,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesHttpClient(@ApplicationContext context: Context): OkHttpClient {
+    fun providesHttpClient(): OkHttpClient {
         val apiKey = BuildConfig.API_KEY
 
         val loggingInterceptor = HttpLoggingInterceptor()
