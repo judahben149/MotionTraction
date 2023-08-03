@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -16,6 +19,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        buildConfigField ("String", "API_KEY", getApiKey())
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -99,4 +103,11 @@ dependencies {
 
 kapt {
     correctErrorTypes = true
+}
+
+fun getApiKey(): String {
+    val propFile = rootProject.file("./local.properties")
+    val properties = Properties()
+    properties.load(FileInputStream(propFile))
+    return properties.getProperty("TMDB_API_KEY")
 }
