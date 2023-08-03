@@ -56,10 +56,10 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
 
-    //Timber
+    // Timber
     implementation("com.jakewharton.timber:timber:$timberVersion")
 
-    //hilt
+    // Hilt
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-compiler:$hiltVersion")
 
@@ -68,18 +68,18 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
 
-    //Room
+    // Room
     implementation("androidx.room:room-runtime:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-paging:$roomVersion")
 
-    //Retrofit & OkHttp
+    // Retrofit & OkHttp
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
     implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
 
-    //Gson
+    // Gson
     implementation("com.squareup.retrofit2:converter-gson:$gsonVersion")
 
     testImplementation("junit:junit:4.13.2")
