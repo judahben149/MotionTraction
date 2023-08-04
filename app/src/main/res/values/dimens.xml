@@ -1,3 +1,12 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="card_margin_horizontal_10dp">10dp</dimen>
+    <dimen name="text_margin_start_5dp">5dp</dimen>
+    <dimen name="card_elevation_5dp">5dp</dimen>
+
+    <dimen name="text_size_genre_13">13sp</dimen>
+    <dimen name="margin_start_5dp">5dp</dimen>
+    <dimen name="margin_end_5dp">5dp</dimen>
+    <dimen name="margin_top_5dp">5dp</dimen>
+    <dimen name="margin_bottom_5dp">5dp</dimen>
 </resources>
