@@ -10,11 +10,11 @@ import com.judahben149.motiontraction.data.local.entity.MovieEntityRemoteKey
 interface RemoteKeyDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllRemoteKeys(movieEntityRemoteKeys: List<MovieEntityRemoteKey>)
+    fun insertAllRemoteKeys(movieEntityRemoteKeys: List<MovieEntityRemoteKey>)
 
     @Query("SELECT * FROM remote_keys WHERE id = :id")
-    suspend fun getAllRemoteKeys(id: Int): MovieEntityRemoteKey?
+    fun getAllRemoteKeys(id: Int): MovieEntityRemoteKey?
 
     @Query("DELETE FROM remote_keys")
-    suspend fun deleteAllRemoteKeys()
+    fun deleteAllRemoteKeys()
 }

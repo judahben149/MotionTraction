@@ -11,11 +11,11 @@ import com.judahben149.motiontraction.data.local.entity.MovieListEntity
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovies(movieEntity: List<MovieListEntity>)
+    fun insertMovies(movieEntity: List<MovieListEntity>)
 
-    @Query("SELECT * FROM MovieListEntity")
+    @Query("SELECT * FROM MovieListEntity ORDER BY id ASC")
     fun getAllMovies(): PagingSource<Int, MovieListEntity>
 
     @Query("DELETE FROM MovieListEntity")
-    suspend fun deleteAllArticles()
+    fun deleteAllArticles()
 }
