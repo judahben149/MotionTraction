@@ -45,7 +45,6 @@
                 tools:text="The Witcher"
                 android:textSize="18sp"
                 android:layout_marginStart="@dimen/text_margin_start_5dp"
-                android:fontFamily="@font/apercu_pro_medium"
                 />
 
             <TextView
@@ -55,7 +54,6 @@
                 tools:text="2023"
                 android:textSize="@dimen/text_size_genre_13"
                 android:layout_marginStart="@dimen/text_margin_start_5dp"
-                android:fontFamily="@font/apercu_pro_regular"
                 />
 
             <TextView
@@ -64,7 +62,6 @@
                 android:layout_height="wrap_content"
                 tools:text="Thriller"
                 android:textSize="@dimen/text_size_genre_13"
-                android:fontFamily="@font/apercu_pro_regular"
                 android:layout_marginStart="@dimen/text_margin_start_5dp"
                 />
 
