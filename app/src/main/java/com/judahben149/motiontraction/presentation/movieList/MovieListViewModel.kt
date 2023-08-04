@@ -2,22 +2,26 @@ package com.judahben149.motiontraction.presentation.movieList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
+import androidx.paging.PagingData
+import androidx.paging.filter
 import androidx.paging.map
+import androidx.paging.rxjava2.cachedIn
 import com.judahben149.motiontraction.data.repository.MovieRepositoryImpl
-import com.judahben149.motiontraction.domain.mappers.entityToMovieListModel
+import com.judahben149.motiontraction.domain.mappers.toListMovie
+import com.judahben149.motiontraction.domain.models.ListMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.map
+import io.reactivex.Flowable
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor(repository: MovieRepositoryImpl): ViewModel() {
+class MovieListViewModel @Inject constructor(private val repository: MovieRepositoryImpl): ViewModel() {
 
-    private val _movieListCached = repository.fetchDiscoverMovieListCached().map { pagingData ->
-        pagingData.map {  movieEntity ->
-            entityToMovieListModel(movieEntity)
-        }
-    }.cachedIn(viewModelScope)
-
-    val movieListCached get() = _movieListCached
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun getMovieList(): Flowable<PagingData<ListMovie>> {
+        return repository.getMovieList()
+            .map { it.filter { it.poster_path != null } }
+            .map { it.map { entity -> entity.toListMovie() } }
+            .cachedIn(viewModelScope)
+    }
 }

@@ -6,9 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,8 +14,7 @@ import com.judahben149.motiontraction.databinding.FragmentMovieListBinding
 import com.judahben149.motiontraction.databinding.ItemLoadMoreBinding
 import com.judahben149.motiontraction.presentation.movieList.adapter.MovieListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import io.reactivex.disposables.CompositeDisposable
 
 @AndroidEntryPoint
 class MovieListFragment : Fragment() {
@@ -31,6 +27,8 @@ class MovieListFragment : Fragment() {
 
     private lateinit var footerBinding: ItemLoadMoreBinding
     private val viewModel: MovieListViewModel by viewModels()
+
+    private val mDisposable = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,17 +62,16 @@ class MovieListFragment : Fragment() {
     }
 
     private fun collectState() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.movieListCached.collectLatest {
-                    adapter.submitData(pagingData = it)
-                }
+        mDisposable.add(
+            viewModel.getMovieList().subscribe {
+                adapter.submitData(lifecycle, it)
             }
-        }
+        )
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        mDisposable.dispose()
         _binding = null
     }
 }
