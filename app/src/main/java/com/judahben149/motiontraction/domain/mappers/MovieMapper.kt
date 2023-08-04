@@ -2,30 +2,32 @@ package com.judahben149.motiontraction.domain.mappers
 
 import com.judahben149.motiontraction.data.local.entity.MovieDetailEntity
 import com.judahben149.motiontraction.data.local.entity.MovieListEntity
+import com.judahben149.motiontraction.data.local.entity.MovieResponseEntity
 import com.judahben149.motiontraction.data.remote.dto.movieDetail.MovieDetailDto
 import com.judahben149.motiontraction.data.remote.dto.movieList.DiscoverMoviesListData
+import com.judahben149.motiontraction.data.remote.dto.movieList.DiscoverMoviesListDto
 import com.judahben149.motiontraction.domain.models.DetailMovie
 import com.judahben149.motiontraction.domain.models.ListMovie
 
 
 //to remove
-fun dtoToMovieListModel(discoverMoviesResponse: DiscoverMoviesListData): ListMovie {
+fun DiscoverMoviesListData.toListMovie(): ListMovie {
     return ListMovie(
-        id = discoverMoviesResponse.id,
-        backdropPath = discoverMoviesResponse.backdrop_path,
-        title = discoverMoviesResponse.title,
-        releaseDate = discoverMoviesResponse.release_date,
-        posterPath = discoverMoviesResponse.poster_path
+        id = this.id,
+        backdropPath = this.backdrop_path,
+        title = this.title,
+        releaseDate = this.release_date,
+        posterPath = this.poster_path
     )
 }
 
-fun entityToMovieListModel(movieListEntity: MovieListEntity): ListMovie {
+fun MovieListEntity.toListMovie(): ListMovie {
     return ListMovie(
-        id = movieListEntity.id,
-        backdropPath = movieListEntity.backdrop_path,
-        title = movieListEntity.title,
-        releaseDate = movieListEntity.release_date,
-        posterPath = movieListEntity.poster_path
+        id = this.id,
+        backdropPath = this.backdrop_path,
+        title = this.title,
+        releaseDate = this.release_date,
+        posterPath = this.poster_path
     )
 }
 
@@ -44,6 +46,15 @@ fun DiscoverMoviesListData.toMovieListDBEntity(): MovieListEntity {
         video = this.video,
         vote_average = this.vote_average,
         vote_count = this.vote_count
+    )
+}
+
+fun DiscoverMoviesListDto.toMovieResponseEntity(): MovieResponseEntity {
+    return MovieResponseEntity (
+        page = this.page,
+        movieListEntity = this.data.map { it.toMovieListDBEntity() },
+        totalPages = this.total_pages,
+        totalResults = this.total_results
     )
 }
 
