@@ -20,3 +20,13 @@ data class MovieListEntity(
     val vote_average: Double,
     val vote_count: Int
 )
+
+
+data class MovieResponseEntity(
+    val page: Int,
+    val movieListEntity: List<MovieListEntity>,
+    val totalPages: Int,
+    val totalResults: Int
+) {
+    val isEndOfPage = page == totalPages
+}
