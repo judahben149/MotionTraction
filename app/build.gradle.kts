@@ -80,9 +80,11 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-paging:$roomVersion")
+    implementation("androidx.room:room-rxjava2:$roomVersion")
 
     // Retrofit & OkHttp
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion")
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
     implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
 
@@ -92,6 +94,7 @@ dependencies {
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
     implementation("androidx.paging:paging-common-ktx:$pagingVersion")
+    implementation("androidx.paging:paging-rxjava2:$pagingVersion")
 
     // Glide
     implementation("com.github.bumptech.glide:glide:$glideVersion")

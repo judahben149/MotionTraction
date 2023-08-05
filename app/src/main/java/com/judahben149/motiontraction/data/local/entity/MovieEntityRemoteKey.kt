@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class MovieEntityRemoteKey(
 
     @PrimaryKey(autoGenerate = false)
-    val id: Int,
+    val id: Long,
     val prev: Int?,
     val next: Int?
 )

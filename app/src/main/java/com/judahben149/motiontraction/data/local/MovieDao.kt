@@ -5,17 +5,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.judahben149.motiontraction.data.local.entity.MovieListEntity
+import com.judahben149.motiontraction.data.local.entity.MovieResponseEntity
 
 @Dao
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovies(movieEntity: List<MovieListEntity>)
+    fun insertMovies(movieEntity: List<MovieResponseEntity.MovieEntity>)
 
-    @Query("SELECT * FROM MovieListEntity")
-    fun getAllMovies(): PagingSource<Int, MovieListEntity>
+    @Query("SELECT * FROM movies ORDER BY id ASC")
+    fun getAllMovies(): PagingSource<Int, MovieResponseEntity.MovieEntity>
 
-    @Query("DELETE FROM MovieListEntity")
-    suspend fun deleteAllArticles()
+    @Query("DELETE FROM movies")
+    fun deleteAllMovies()
 }
