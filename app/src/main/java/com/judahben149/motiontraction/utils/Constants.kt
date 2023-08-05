@@ -6,6 +6,7 @@ object Constants  {
     const val NETWORK_PAGE_SIZE = 20
     const val STARTING_PAGE_INDEX = 1
     const val INVALID_PAGE = -1
+    const val INITIAL_PAGE = 1
     const val MAX_LOAD_SIZE = 30
     const val INITIAL_LOAD_SIZE = 40
     const val PRE_FETCH_DISTANCE = 5
