@@ -55,6 +55,7 @@ dependencies {
     val gsonVersion = "2.9.0"
     val pagingVersion = "3.2.0"
     val glideVersion = "4.15.1"
+    val epoxyVersion = "5.0.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -99,6 +100,11 @@ dependencies {
     // Glide
     implementation("com.github.bumptech.glide:glide:$glideVersion")
     kapt("com.github.bumptech.glide:compiler:$glideVersion")
+
+    // Epoxy
+    implementation("com.airbnb.android:epoxy:$epoxyVersion")
+    implementation("com.airbnb.android:epoxy-paging:$epoxyVersion")
+    implementation("com.airbnb.android:epoxy-paging3:$epoxyVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
