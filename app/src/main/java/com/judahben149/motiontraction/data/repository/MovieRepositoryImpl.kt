@@ -7,7 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.judahben149.motiontraction.data.local.MovieDatabase
-import com.judahben149.motiontraction.data.local.entity.MovieListEntity
+import com.judahben149.motiontraction.data.local.entity.MovieResponseEntity
 import com.judahben149.motiontraction.data.paging.DiscoverMoviesRXRemoteMediator
 import com.judahben149.motiontraction.data.remote.MovieService
 import com.judahben149.motiontraction.data.remote.dto.movieDetail.MovieDetailDto
@@ -27,7 +27,7 @@ class MovieRepositoryImpl @Inject constructor(
 
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getMovieList(): Flowable<PagingData<MovieListEntity>> {
+    override fun getMovieList(): Flowable<PagingData<MovieResponseEntity.MovieEntity>> {
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,

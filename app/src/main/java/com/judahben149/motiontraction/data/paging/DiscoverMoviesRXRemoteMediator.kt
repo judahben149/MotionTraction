@@ -6,7 +6,6 @@ import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.judahben149.motiontraction.data.local.MovieDatabase
 import com.judahben149.motiontraction.data.local.entity.MovieEntityRemoteKey
-import com.judahben149.motiontraction.data.local.entity.MovieListEntity
 import com.judahben149.motiontraction.data.local.entity.MovieResponseEntity
 import com.judahben149.motiontraction.data.remote.MovieService
 import com.judahben149.motiontraction.domain.mappers.toMovieResponseEntity
@@ -20,11 +19,11 @@ class DiscoverMoviesRXRemoteMediator(
     private val database: MovieDatabase,
     private val moviesService: MovieService,
     private val initialPage: Int = 1
-) : RxRemoteMediator<Int, MovieListEntity>() {
+) : RxRemoteMediator<Int, MovieResponseEntity.MovieEntity>() {
 
     override fun loadSingle(
         loadType: LoadType,
-        state: PagingState<Int, MovieListEntity>
+        state: PagingState<Int, MovieResponseEntity.MovieEntity>
     ): Single<MediatorResult> {
 
         return Single.just(loadType)
@@ -64,19 +63,19 @@ class DiscoverMoviesRXRemoteMediator(
 
         try {
             if (loadType == LoadType.REFRESH) {
-                database.movieDao.deleteAllArticles()
                 database.remoteKeyDao.deleteAllRemoteKeys()
+                database.movieDao.deleteAllMovies()
             }
 
-            val prevKey = if (page == initialPage) null else page.minus(1)
-            val nextKey = if (data.isEndOfPage) null else page.plus(1)
+            val prevKey = if (page == initialPage) null else page - 1
+            val nextKey = if (data.isEndOfPage) null else page + 1
 
-            val remoteKeyList = data.movieListEntity.map { movie ->
-                MovieEntityRemoteKey(movie.id, prevKey, nextKey)
+            val remoteKeyList = data.movieEntity.map { movie ->
+                MovieEntityRemoteKey(movie.movieId, prevKey, nextKey)
             }
 
             database.remoteKeyDao.insertAllRemoteKeys(remoteKeyList)
-            database.movieDao.insertMovies(data.movieListEntity)
+            database.movieDao.insertMovies(data.movieEntity)
             database.setTransactionSuccessful()
         } finally {
             database.endTransaction()
@@ -85,23 +84,23 @@ class DiscoverMoviesRXRemoteMediator(
         return data
     }
 
-    private fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, MovieListEntity>): MovieEntityRemoteKey? {
+    private fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, MovieResponseEntity.MovieEntity>): MovieEntityRemoteKey? {
         return state.anchorPosition?.let { anchorPosition ->
-            state.closestItemToPosition(anchorPosition)?.id?.let { movieId ->
-                database.remoteKeyDao.getAllRemoteKeys(movieId)
+            state.closestItemToPosition(anchorPosition)?.movieId?.let { movieId ->
+                database.remoteKeyDao.getRemoteKeysByMovieId(movieId)
             }
         }
     }
 
-    private fun getLastRemoteKey(state: PagingState<Int, MovieListEntity>): MovieEntityRemoteKey? {
+    private fun getLastRemoteKey(state: PagingState<Int, MovieResponseEntity.MovieEntity>): MovieEntityRemoteKey? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { movie ->
-            database.remoteKeyDao.getAllRemoteKeys(movie.id)
+            database.remoteKeyDao.getRemoteKeysByMovieId(movie.movieId)
         }
     }
 
-    private fun getFirstRemoteKey(state: PagingState<Int, MovieListEntity>): MovieEntityRemoteKey? {
+    private fun getFirstRemoteKey(state: PagingState<Int, MovieResponseEntity.MovieEntity>): MovieEntityRemoteKey? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { movie ->
-            database.remoteKeyDao.getAllRemoteKeys(movie.id)
+            database.remoteKeyDao.getRemoteKeysByMovieId(movie.movieId)
         }
     }
 }
