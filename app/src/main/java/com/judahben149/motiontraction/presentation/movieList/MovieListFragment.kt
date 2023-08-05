@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.judahben149.motiontraction.R
 import com.judahben149.motiontraction.databinding.FragmentMovieListBinding
-import com.judahben149.motiontraction.databinding.ItemLoadMoreBinding
+import com.judahben149.motiontraction.presentation.movieList.adapter.LoadingGridStateAdapter
 import com.judahben149.motiontraction.presentation.movieList.adapter.MovieListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
@@ -25,7 +27,6 @@ class MovieListFragment : Fragment() {
     private lateinit var adapter: MovieListAdapter
     private lateinit var recyclerView: RecyclerView
 
-    private lateinit var footerBinding: ItemLoadMoreBinding
     private val viewModel: MovieListViewModel by viewModels()
 
     private val mDisposable = CompositeDisposable()
@@ -35,7 +36,6 @@ class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
-        footerBinding = ItemLoadMoreBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -57,8 +57,31 @@ class MovieListFragment : Fragment() {
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        recyclerView.adapter = adapter
         recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = adapter
+//            .withLoadStateFooter(
+//            footer = LoadingGridStateAdapter()
+//        )
+
+//        adapter.addLoadStateListener { loadState ->
+//            val errorState = loadState.source.append as? LoadState.Error
+//                ?: loadState.source.prepend as? LoadState.Error
+//                ?: loadState.append as? LoadState.Error
+//                ?: loadState.prepend as? LoadState.Error
+//
+//            errorState?.let {
+//                AlertDialog.Builder(requireContext())
+//                    .setTitle(R.string.error)
+//                    .setMessage(it.error.localizedMessage)
+//                    .setNegativeButton(R.string.cancel) { dialog, _ ->
+//                        dialog.dismiss()
+//                    }
+//                    .setPositiveButton(R.string.retry) { _, _ ->
+//                        adapter.retry()
+//                    }
+//                    .show()
+//            }
+//        }
     }
 
     private fun collectState() {

@@ -7,28 +7,28 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.judahben149.motiontraction.data.local.entity.MovieResponseEntity
 import com.judahben149.motiontraction.databinding.ItemCardMovieBinding
-import com.judahben149.motiontraction.domain.models.ListMovie
 import com.judahben149.motiontraction.utils.Constants.BACKDROP_BASE_URL
 import com.judahben149.motiontraction.utils.parseFriendlyDate
 
 class MovieListAdapter(
     private val context: Context,
     private val onMovieItemClicked: (id: Int) -> Unit
-) : PagingDataAdapter<ListMovie, MovieListAdapter.MovieListViewHolder>(MoviesAdapterDiffer()) {
+) : PagingDataAdapter<MovieResponseEntity.MovieEntity, MovieListAdapter.MovieListViewHolder>(MoviesAdapterDiffer()) {
 
     inner class MovieListViewHolder(private val binding: ItemCardMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindItem(listMovieItem: ListMovie) {
+        fun bindItem(listMovieItem: MovieResponseEntity.MovieEntity) {
             binding.tvMovieName.text = listMovieItem.title
-            binding.tvMovieDate.text = listMovieItem.releaseDate.parseFriendlyDate()
+            binding.tvMovieDate.text = listMovieItem.release_date.parseFriendlyDate()
             binding.cardItemMovie.setOnClickListener {
-                onMovieItemClicked(listMovieItem.id)
+                onMovieItemClicked(listMovieItem.id.toInt())
             }
 
             Glide.with(context)
-                .load(BACKDROP_BASE_URL + listMovieItem.posterPath)
+                .load(BACKDROP_BASE_URL + listMovieItem.poster_path)
                 .into(binding.ivMovieImage)
         }
     }
@@ -44,17 +44,17 @@ class MovieListAdapter(
     }
 
 
-    class MoviesAdapterDiffer : DiffUtil.ItemCallback<ListMovie>() {
+    class MoviesAdapterDiffer : DiffUtil.ItemCallback<MovieResponseEntity.MovieEntity>() {
         override fun areItemsTheSame(
-            oldItem: ListMovie,
-            newItem: ListMovie
+            oldItem: MovieResponseEntity.MovieEntity,
+            newItem: MovieResponseEntity.MovieEntity
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: ListMovie,
-            newItem: ListMovie
+            oldItem: MovieResponseEntity.MovieEntity,
+            newItem: MovieResponseEntity.MovieEntity
         ): Boolean {
             return oldItem == newItem
         }
