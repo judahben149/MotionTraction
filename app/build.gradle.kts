@@ -56,6 +56,8 @@ dependencies {
     val pagingVersion = "3.2.0"
     val glideVersion = "4.15.1"
     val epoxyVersion = "5.0.0"
+    val rxJavaVersion = "2.2.13"
+    val rxAndroidVersion = "2.1.1"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -81,7 +83,6 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-paging:$roomVersion")
-    implementation("androidx.room:room-rxjava2:$roomVersion")
 
     // Retrofit & OkHttp
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -95,7 +96,12 @@ dependencies {
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:$pagingVersion")
     implementation("androidx.paging:paging-common-ktx:$pagingVersion")
+
+    // Rx Java
+    implementation("io.reactivex.rxjava2:rxjava:$rxJavaVersion")
+    implementation("io.reactivex.rxjava2:rxandroid:$rxAndroidVersion")
     implementation("androidx.paging:paging-rxjava2:$pagingVersion")
+    implementation("androidx.room:room-rxjava2:$roomVersion")
 
     // Glide
     implementation("com.github.bumptech.glide:glide:$glideVersion")
