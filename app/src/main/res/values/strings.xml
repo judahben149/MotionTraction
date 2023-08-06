@@ -49,4 +49,8 @@
     <string name="retry">Retry</string>
     <string name="error">Error</string>
     <string name="cancel">Cancel</string>
+    <string name="dot">•</string>
+    <string name="movie_poster_image">Movie Poster Image</string>
+    <string name="cast">Cast</string>
+    <string name="back_button">Back Button</string>
 </resources>
