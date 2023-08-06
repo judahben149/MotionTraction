@@ -7,28 +7,32 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.judahben149.motiontraction.data.local.entity.MovieResponseEntity
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.judahben149.motiontraction.R
 import com.judahben149.motiontraction.databinding.ItemCardMovieBinding
+import com.judahben149.motiontraction.domain.models.ListMovie
 import com.judahben149.motiontraction.utils.Constants.BACKDROP_BASE_URL
 import com.judahben149.motiontraction.utils.parseFriendlyDate
 
 class MovieListAdapter(
     private val context: Context,
     private val onMovieItemClicked: (id: Int) -> Unit
-) : PagingDataAdapter<MovieResponseEntity.MovieEntity, MovieListAdapter.MovieListViewHolder>(MoviesAdapterDiffer()) {
+) : PagingDataAdapter<ListMovie, MovieListAdapter.MovieListViewHolder>(MoviesAdapterDiffer()) {
 
     inner class MovieListViewHolder(private val binding: ItemCardMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindItem(listMovieItem: MovieResponseEntity.MovieEntity) {
+        fun bindItem(listMovieItem: ListMovie) {
             binding.tvMovieName.text = listMovieItem.title
-            binding.tvMovieDate.text = listMovieItem.release_date.parseFriendlyDate()
+            binding.tvMovieDate.text = listMovieItem.releaseDate.parseFriendlyDate()
             binding.cardItemMovie.setOnClickListener {
                 onMovieItemClicked(listMovieItem.id.toInt())
             }
 
             Glide.with(context)
-                .load(BACKDROP_BASE_URL + listMovieItem.poster_path)
+                .load(BACKDROP_BASE_URL + listMovieItem.posterPath)
+                .placeholder(R.drawable.poster_placeholder)
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.ivMovieImage)
         }
     }
@@ -44,17 +48,17 @@ class MovieListAdapter(
     }
 
 
-    class MoviesAdapterDiffer : DiffUtil.ItemCallback<MovieResponseEntity.MovieEntity>() {
+    class MoviesAdapterDiffer : DiffUtil.ItemCallback<ListMovie>() {
         override fun areItemsTheSame(
-            oldItem: MovieResponseEntity.MovieEntity,
-            newItem: MovieResponseEntity.MovieEntity
+            oldItem: ListMovie,
+            newItem: ListMovie
         ): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.id.toInt() == newItem.id.toInt()
         }
 
         override fun areContentsTheSame(
-            oldItem: MovieResponseEntity.MovieEntity,
-            newItem: MovieResponseEntity.MovieEntity
+            oldItem: ListMovie,
+            newItem: ListMovie
         ): Boolean {
             return oldItem == newItem
         }

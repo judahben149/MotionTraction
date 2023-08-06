@@ -1,14 +1,11 @@
 package com.judahben149.motiontraction.domain.models
 
-import com.judahben149.motiontraction.data.remote.dto.movieDetail.GenreX
-import com.judahben149.motiontraction.data.remote.dto.movieDetail.SpokenLanguage
-
 data class DetailMovie(
 
     val adult: Boolean = false,
     val backdropPath: String = "",
     val budget: Double = 0.0,
-    val genres: List<GenreX>,
+    val genres: List<Genre> = emptyList(),
     val homepageUrl: String = "",
     val id: Int = 0,
     val imdbId: String = "",
@@ -20,7 +17,9 @@ data class DetailMovie(
     val releaseDate: String = "",
     val revenue: Double = 0.0,
     val runtime: Int = 0,
-    val spokenLanguages: List<SpokenLanguage>,
+    val productionCompanies: List<ProductionCompany> = emptyList(),
+    val productionCountries: List<ProductionCountry> = emptyList(),
+    val spokenLanguages: List<SpokenLanguage> = emptyList(),
     val status: String = "",
     val tagline: String = "",
     val title: String = "",
@@ -28,3 +27,27 @@ data class DetailMovie(
     val voteAverage: Double = 0.0,
     val voteCount: Int = 0
 )
+
+data class ProductionCompany(
+    val id: Int =0,
+    val logoPath: String = "",
+    val name: String = "",
+    val originCountry: String = ""
+)
+
+data class ProductionCountry(
+    val iso6391: String = "",
+    val name: String = ""
+)
+
+data class SpokenLanguage(
+    val englishName: String = "",
+    val iso6391: String = "",
+    val name: String = ""
+)
+
+data class Genre(
+    val id: Int = 0,
+    val name: String = ""
+)
+
