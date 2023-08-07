@@ -12,14 +12,12 @@ import com.judahben149.motiontraction.data.paging.DiscoverMoviesRXRemoteMediator
 import com.judahben149.motiontraction.data.remote.MovieService
 import com.judahben149.motiontraction.data.remote.dto.credits.CreditsDto
 import com.judahben149.motiontraction.data.remote.dto.movieDetail.MovieDetailDto
-import com.judahben149.motiontraction.domain.mappers.toCredits
 import com.judahben149.motiontraction.domain.repository.MovieRepository
 import com.judahben149.motiontraction.utils.Constants.INITIAL_LOAD_SIZE
 import com.judahben149.motiontraction.utils.Constants.MAX_LOAD_SIZE
 import com.judahben149.motiontraction.utils.Constants.NETWORK_PAGE_SIZE
 import com.judahben149.motiontraction.utils.Constants.PRE_FETCH_DISTANCE
 import com.judahben149.motiontraction.utils.Constants.STARTING_PAGE_INDEX
-import com.judahben149.motiontraction.utils.logThis
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -54,7 +52,7 @@ class MovieRepositoryImpl @Inject constructor(
     @WorkerThread
     override fun getMovieCredits(id: Int): Observable<CreditsDto> {
         val result = moviesService.fetchMovieCredits(id)
-        result.map { it.toCredits().toString().logThis() }
+
         return result
     }
 }
