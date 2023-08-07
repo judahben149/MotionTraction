@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.judahben149.motiontraction.databinding.FragmentMovieDetailBinding
-import com.judahben149.motiontraction.presentation.MainActivity
 import com.judahben149.motiontraction.presentation.movieDetail.epoxy.MovieDetailEpoxyController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,8 +34,6 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.btnBack.setOnClickListener { navController.popBackStack() }
         binding.epoxyRvMovieDetail.setController(controller)
-
-        (requireActivity() as MainActivity).supportActionBar!!.hide()
 
         val id = arguments?.getInt("MOVIE_ID")
         id?.let { movieId = it }
