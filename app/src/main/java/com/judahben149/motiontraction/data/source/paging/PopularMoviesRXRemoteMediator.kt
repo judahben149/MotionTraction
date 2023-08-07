@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
 
 @OptIn(ExperimentalPagingApi::class)
-class DiscoverMoviesRXRemoteMediator(
+class PopularMoviesRXRemoteMediator(
     private val database: MovieDatabase,
     private val moviesService: MovieService,
     private val initialPage: Int = 1
@@ -75,7 +75,7 @@ class DiscoverMoviesRXRemoteMediator(
             }
 
             database.remoteKeyDao.insertAllRemoteKeys(remoteKeyList)
-            database.movieDao.insertMovies(data.movieEntity)
+            database.movieDao.saveAllMovies(data.movieEntity)
             database.setTransactionSuccessful()
         } finally {
             database.endTransaction()

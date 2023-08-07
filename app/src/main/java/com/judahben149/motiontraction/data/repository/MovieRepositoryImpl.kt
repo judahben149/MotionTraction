@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.judahben149.motiontraction.data.source.local.MovieDatabase
 import com.judahben149.motiontraction.data.source.local.entity.MovieResponseEntity
-import com.judahben149.motiontraction.data.source.paging.DiscoverMoviesRXRemoteMediator
+import com.judahben149.motiontraction.data.source.paging.PopularMoviesRXRemoteMediator
 import com.judahben149.motiontraction.data.source.remote.MovieService
 import com.judahben149.motiontraction.data.source.remote.dto.credits.CreditsDto
 import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.MovieDetailDto
@@ -38,7 +38,7 @@ class MovieRepositoryImpl @Inject constructor(
                 prefetchDistance = PRE_FETCH_DISTANCE,
                 initialLoadSize = INITIAL_LOAD_SIZE
             ),
-            remoteMediator = DiscoverMoviesRXRemoteMediator(database, moviesService, STARTING_PAGE_INDEX),
+            remoteMediator = PopularMoviesRXRemoteMediator(database, moviesService, STARTING_PAGE_INDEX),
             pagingSourceFactory = { database.movieDao.getAllMovies() }
         ).flowable
     }
