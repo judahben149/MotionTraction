@@ -9,9 +9,9 @@ import com.judahben149.motiontraction.domain.models.credits.Crew
 
 fun CreditsDto.toCredits(): Credits {
     return Credits(
-        id = this.id ?: 0,
-        cast = this.castDto?.map { it.toCast() } ?: emptyList(),
-        crew = this.crewDto?.map { it.toCrew() } ?: emptyList()
+        id = this.id,
+        cast = this.castDto.map { it.toCast() },
+        crew = this.crewDto.map { it.toCrew() }
     )
 }
 
