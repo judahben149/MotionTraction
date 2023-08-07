@@ -1,5 +1,6 @@
 package com.judahben149.motiontraction.domain.mappers
 
+import com.judahben149.motiontraction.data.source.local.entity.MovieDetailEntity
 import com.judahben149.motiontraction.data.source.local.entity.MovieResponseEntity
 import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.GenreDto
 import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.MovieDetailDto
@@ -35,7 +36,7 @@ fun PopularMoviesListDto.toMovieResponseEntity(): MovieResponseEntity {
 }
 
 fun PopularMoviesListDto.PopularMoviesListData.toMovieResponseDataEntity(): MovieResponseEntity.MovieEntity {
-    return com.judahben149.motiontraction.data.source.local.entity.MovieResponseEntity.MovieEntity(
+    return MovieResponseEntity.MovieEntity(
         movieId = this.id,
         adult = this.adult,
         backdropPath = this.backdropPath ?: "",
@@ -51,26 +52,47 @@ fun PopularMoviesListDto.PopularMoviesListData.toMovieResponseDataEntity(): Movi
     )
 }
 
-fun MovieDetailDto.toDetailMovie(): DetailMovie {
+fun MovieDetailEntity.toDetailMovie(): DetailMovie {
     return DetailMovie(
+        id = this.id,
+        adult = this.adult,
+        backdropPath = this.backdropPath,
+        budget = this.budget,
+        homepageUrl = this.homepageUrl,
+        imdbId = this.imdbId,
+        originalLanguage = this.originalLanguage,
+        originalTitle = this.originalTitle,
+        overview = this.overview,
+        popularity = this.popularity,
+        posterPath = this.posterPath,
+        releaseDate = this.releaseDate,
+        revenue = this.revenue,
+        runtime = this.runtime,
+        status = this.status,
+        tagline = this.tagline,
+        title = this.title,
+        video = this.video,
+        voteAverage = this.voteAverage,
+        voteCount = this.voteCount
+    )
+}
+
+fun MovieDetailDto.toMovieDetailEntity(): MovieDetailEntity {
+    return MovieDetailEntity(
+        id = this.id,
         adult = this.adult,
         backdropPath = this.backdropPath ?: "",
         budget = this.budget.toDouble(),
-        genres = this.genres.map { it.toGenre() },
         homepageUrl = this.homepage ?: "",
-        id = this.id,
         imdbId = this.imdbId ?: "",
         originalLanguage = this.originalLanguage,
         originalTitle = this.originalTitle,
         overview = this.overview ?: "",
         popularity = this.popularity,
         posterPath = this.posterPath ?: "",
-        productionCompanies = this.productionCompanies?.map { it.toProductionCompany() } ?: emptyList(),
-        productionCountries = this.productionCountries?.map { it.toProductionCountry() }  ?: emptyList(),
         releaseDate = this.releaseDate,
         revenue = this.revenue.toDouble(),
         runtime = this.runtime ?: 0,
-        spokenLanguages = this.spokenLanguages?.map { it.toSpokenLanguage() }  ?: emptyList(),
         status = this.status,
         tagline = this.tagline ?: "",
         title = this.title,
