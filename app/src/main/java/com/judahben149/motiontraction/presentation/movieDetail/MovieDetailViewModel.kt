@@ -16,7 +16,8 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val repository: MovieRepositoryImpl): ViewModel() {
+class MovieDetailViewModel @Inject constructor(private val repository: MovieRepositoryImpl) :
+    ViewModel() {
 
     private var _state: MutableLiveData<MovieDetailUiState> = MutableLiveData(MovieDetailUiState())
     val state: LiveData<MovieDetailUiState> = _state
@@ -51,18 +52,20 @@ class MovieDetailViewModel @Inject constructor(private val repository: MovieRepo
             override fun onError(e: Throwable) {
                 e.printStackTrace()
                 _state.value = _state.value?.copy(
-                        isError = true,
-                        errorMessage = e.message.toString(),
-                    )
+                    isError = true,
+                    errorMessage = e.message.toString(),
+                )
             }
 
-            override fun onComplete() { }
+            override fun onComplete() {}
 
             override fun onNext(movie: DetailMovie) {
                 _state.value = _state.value?.copy(
                     movieDetail = movie,
                     isGetMovieDetailSuccessful = true
                 )
+
+                toggleLoadingState(!(_state.value?.isGetMovieDetailSuccessful == true && _state.value?.isGetMovieCastSuccessful == true))
             }
         }
     }
@@ -92,10 +95,11 @@ class MovieDetailViewModel @Inject constructor(private val repository: MovieRepo
                 if (_state.value?.isGetMovieDetailSuccessful == true) {
                     _state.value = _state.value?.copy(
                         credits = credits,
-                        isGetMovieCastSuccessful = true,
-                        isLoading = false
+                        isGetMovieCastSuccessful = true
                     )
                 }
+
+                toggleLoadingState(!(_state.value?.isGetMovieDetailSuccessful == true && _state.value?.isGetMovieCastSuccessful == true))
             }
         }
     }

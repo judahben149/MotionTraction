@@ -13,6 +13,7 @@ import com.judahben149.motiontraction.data.remote.MovieService
 import com.judahben149.motiontraction.data.remote.dto.credits.CreditsDto
 import com.judahben149.motiontraction.data.remote.dto.movieDetail.MovieDetailDto
 import com.judahben149.motiontraction.domain.mappers.toCredits
+import com.judahben149.motiontraction.domain.repository.MovieRepository
 import com.judahben149.motiontraction.utils.Constants.INITIAL_LOAD_SIZE
 import com.judahben149.motiontraction.utils.Constants.MAX_LOAD_SIZE
 import com.judahben149.motiontraction.utils.Constants.NETWORK_PAGE_SIZE

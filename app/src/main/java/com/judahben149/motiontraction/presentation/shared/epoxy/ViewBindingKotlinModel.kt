@@ -1,4 +1,4 @@
-package com.judahben149.motiontraction.presentation.shared
+package com.judahben149.motiontraction.presentation.shared.epoxy
 
 import android.view.View
 import androidx.annotation.Keep

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.judahben149.motiontraction.databinding.FragmentMovieDetailBinding
 import com.judahben149.motiontraction.presentation.MainActivity
 import com.judahben149.motiontraction.presentation.movieDetail.epoxy.MovieDetailEpoxyController
@@ -20,6 +21,7 @@ class MovieDetailFragment : Fragment() {
 
     private val viewModel: MovieDetailViewModel by viewModels()
     private val controller by lazy { MovieDetailEpoxyController(requireContext()) }
+    private val navController by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +33,7 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnBack.setOnClickListener { navController.popBackStack() }
         binding.epoxyRvMovieDetail.setController(controller)
 
         (requireActivity() as MainActivity).supportActionBar!!.hide()
