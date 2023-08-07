@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import com.judahben149.motiontraction.databinding.FragmentMovieDetailBinding
 import com.judahben149.motiontraction.presentation.MainActivity
 import com.judahben149.motiontraction.presentation.movieDetail.epoxy.MovieDetailEpoxyController
-import com.judahben149.motiontraction.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
