@@ -39,14 +39,14 @@ class MovieDetailFragment : Fragment() {
         val id = arguments?.getInt("MOVIE_ID")
         id?.let { movieId = it }
 
-        viewModel._state.observe(viewLifecycleOwner) { state ->
-            if (state.isGetMovieDetailSuccessful) {
-                state.movieDetail.originalTitle.toast(requireContext())
-                controller.setData(state.movieDetail)
+        viewModel.state.observe(viewLifecycleOwner) { state ->
+            if (state.isGetMovieCastSuccessful) {
+                controller.setData(state)
             }
         }
 
         viewModel.getMovieDetail(movieId)
+        viewModel.getMovieCredits(movieId)
     }
 
     override fun onDestroy() {

@@ -9,5 +9,6 @@ data class MovieDetailUiState(
     val errorMessage: String = "",
     val isLoading: Boolean = false,
     val isError: Boolean = false,
-    val isGetMovieDetailSuccessful: Boolean = false
+    val isGetMovieDetailSuccessful: Boolean = false,
+    val isGetMovieCastSuccessful: Boolean = false,
 )

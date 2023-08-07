@@ -1,19 +1,21 @@
 package com.judahben149.motiontraction.presentation.movieDetail.epoxy.models
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import com.judahben149.motiontraction.R
 import com.judahben149.motiontraction.databinding.EpoxyModelDetailCastSectionBinding
+import com.judahben149.motiontraction.domain.models.credits.Credits
+import com.judahben149.motiontraction.presentation.movieDetail.epoxy.MovieCastAdapter
 import com.judahben149.motiontraction.presentation.shared.ViewBindingKotlinModel
 
 data class MovieDetailCastEpoxyModel(
     val context: Context,
-    val castList: List<String> //change this to the cast detail model
+    val credits: Credits
 ): ViewBindingKotlinModel<EpoxyModelDetailCastSectionBinding>(R.layout.epoxy_model_detail_cast_section) {
 
     override fun EpoxyModelDetailCastSectionBinding.bind() {
-//        rvCast.adapter = MovieCastAdapter()
+        val adapter = MovieCastAdapter(context)
+        rvCast.adapter = adapter
+
+        adapter.submitList(credits.cast)
     }
 }
-
-//class MovieCastAdapter(): RecyclerView.Adapter
