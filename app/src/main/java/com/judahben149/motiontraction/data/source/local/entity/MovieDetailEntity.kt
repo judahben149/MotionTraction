@@ -1,4 +1,4 @@
-package com.judahben149.motiontraction.data.local.entity
+package com.judahben149.motiontraction.data.source.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

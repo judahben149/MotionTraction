@@ -1,4 +1,4 @@
-package com.judahben149.motiontraction.data.remote.dto.movieDetail
+package com.judahben149.motiontraction.data.source.remote.dto.movieDetail
 
 import com.google.gson.annotations.SerializedName
 

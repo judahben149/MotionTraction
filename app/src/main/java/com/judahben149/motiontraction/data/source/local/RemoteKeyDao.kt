@@ -1,10 +1,10 @@
-package com.judahben149.motiontraction.data.local
+package com.judahben149.motiontraction.data.source.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.judahben149.motiontraction.data.local.entity.MovieEntityRemoteKey
+import com.judahben149.motiontraction.data.source.local.entity.MovieEntityRemoteKey
 
 @Dao
 interface RemoteKeyDao {

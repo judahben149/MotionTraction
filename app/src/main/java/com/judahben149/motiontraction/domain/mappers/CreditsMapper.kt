@@ -1,8 +1,8 @@
 package com.judahben149.motiontraction.domain.mappers
 
-import com.judahben149.motiontraction.data.remote.dto.credits.CastDto
-import com.judahben149.motiontraction.data.remote.dto.credits.CreditsDto
-import com.judahben149.motiontraction.data.remote.dto.credits.CrewDto
+import com.judahben149.motiontraction.data.source.remote.dto.credits.CastDto
+import com.judahben149.motiontraction.data.source.remote.dto.credits.CreditsDto
+import com.judahben149.motiontraction.data.source.remote.dto.credits.CrewDto
 import com.judahben149.motiontraction.domain.models.credits.Cast
 import com.judahben149.motiontraction.domain.models.credits.Credits
 import com.judahben149.motiontraction.domain.models.credits.Crew

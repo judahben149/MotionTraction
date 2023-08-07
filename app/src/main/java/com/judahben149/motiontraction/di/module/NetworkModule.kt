@@ -1,7 +1,7 @@
 package com.judahben149.motiontraction.di.module
 
 import com.judahben149.motiontraction.BuildConfig
-import com.judahben149.motiontraction.data.remote.MovieService
+import com.judahben149.motiontraction.data.source.remote.MovieService
 import com.judahben149.motiontraction.utils.Constants
 import dagger.Module
 import dagger.Provides

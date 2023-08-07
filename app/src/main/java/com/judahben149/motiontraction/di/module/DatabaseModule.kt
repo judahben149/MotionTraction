@@ -2,7 +2,7 @@ package com.judahben149.motiontraction.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.judahben149.motiontraction.data.local.MovieDatabase
+import com.judahben149.motiontraction.data.source.local.MovieDatabase
 import com.judahben149.motiontraction.utils.Constants.MOVIE_DATABASE
 import dagger.Module
 import dagger.Provides

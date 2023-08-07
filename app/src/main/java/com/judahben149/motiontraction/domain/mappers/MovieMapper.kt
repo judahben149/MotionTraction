@@ -1,12 +1,12 @@
 package com.judahben149.motiontraction.domain.mappers
 
-import com.judahben149.motiontraction.data.local.entity.MovieResponseEntity
-import com.judahben149.motiontraction.data.remote.dto.movieDetail.GenreDto
-import com.judahben149.motiontraction.data.remote.dto.movieDetail.MovieDetailDto
-import com.judahben149.motiontraction.data.remote.dto.movieDetail.ProductionCompanyDto
-import com.judahben149.motiontraction.data.remote.dto.movieDetail.ProductionCountryDto
-import com.judahben149.motiontraction.data.remote.dto.movieDetail.SpokenLanguageDto
-import com.judahben149.motiontraction.data.remote.dto.movieList.PopularMoviesListDto
+import com.judahben149.motiontraction.data.source.local.entity.MovieResponseEntity
+import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.GenreDto
+import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.MovieDetailDto
+import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.ProductionCompanyDto
+import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.ProductionCountryDto
+import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.SpokenLanguageDto
+import com.judahben149.motiontraction.data.source.remote.dto.movieList.PopularMoviesListDto
 import com.judahben149.motiontraction.domain.models.DetailMovie
 import com.judahben149.motiontraction.domain.models.Genre
 import com.judahben149.motiontraction.domain.models.ListMovie
@@ -35,7 +35,7 @@ fun PopularMoviesListDto.toMovieResponseEntity(): MovieResponseEntity {
 }
 
 fun PopularMoviesListDto.PopularMoviesListData.toMovieResponseDataEntity(): MovieResponseEntity.MovieEntity {
-    return MovieResponseEntity.MovieEntity(
+    return com.judahben149.motiontraction.data.source.local.entity.MovieResponseEntity.MovieEntity(
         movieId = this.id,
         adult = this.adult,
         backdropPath = this.backdropPath ?: "",

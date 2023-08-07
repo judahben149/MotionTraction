@@ -1,8 +1,8 @@
-package com.judahben149.motiontraction.data.remote
+package com.judahben149.motiontraction.data.source.remote
 
-import com.judahben149.motiontraction.data.remote.dto.credits.CreditsDto
-import com.judahben149.motiontraction.data.remote.dto.movieDetail.MovieDetailDto
-import com.judahben149.motiontraction.data.remote.dto.movieList.PopularMoviesListDto
+import com.judahben149.motiontraction.data.source.remote.dto.credits.CreditsDto
+import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.MovieDetailDto
+import com.judahben149.motiontraction.data.source.remote.dto.movieList.PopularMoviesListDto
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single

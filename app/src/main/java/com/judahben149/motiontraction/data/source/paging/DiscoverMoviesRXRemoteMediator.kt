@@ -1,13 +1,13 @@
-package com.judahben149.motiontraction.data.paging
+package com.judahben149.motiontraction.data.source.paging
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
-import com.judahben149.motiontraction.data.local.MovieDatabase
-import com.judahben149.motiontraction.data.local.entity.MovieEntityRemoteKey
-import com.judahben149.motiontraction.data.local.entity.MovieResponseEntity
-import com.judahben149.motiontraction.data.remote.MovieService
+import com.judahben149.motiontraction.data.source.local.MovieDatabase
+import com.judahben149.motiontraction.data.source.local.entity.MovieEntityRemoteKey
+import com.judahben149.motiontraction.data.source.local.entity.MovieResponseEntity
+import com.judahben149.motiontraction.data.source.remote.MovieService
 import com.judahben149.motiontraction.domain.mappers.toMovieResponseEntity
 import com.judahben149.motiontraction.utils.Constants.INVALID_PAGE
 import io.reactivex.Single
