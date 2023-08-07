@@ -22,13 +22,14 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             app:layout_scrollFlags="scroll|enterAlways"
+            app:menu="@menu/menu_tool_bar"
             android:layout_height="?attr/actionBarSize" >
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Popular"
+                android:text="@string/popular"
                 android:textSize="22sp"
                 />
         </com.google.android.material.appbar.MaterialToolbar>
