@@ -7,4 +7,5 @@
     <string name="movie_poster_image">Movie Poster Image</string>
     <string name="cast">Cast</string>
     <string name="back_button">Back Button</string>
+    <string name="popular">Popular</string>
 </resources>
