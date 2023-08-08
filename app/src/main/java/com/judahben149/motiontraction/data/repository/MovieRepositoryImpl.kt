@@ -22,7 +22,7 @@ import com.judahben149.motiontraction.utils.Constants.MAX_LOAD_SIZE
 import com.judahben149.motiontraction.utils.Constants.NETWORK_PAGE_SIZE
 import com.judahben149.motiontraction.utils.Constants.PRE_FETCH_DISTANCE
 import com.judahben149.motiontraction.utils.Constants.STARTING_PAGE_INDEX
-import com.judahben149.motiontraction.utils.isNetworkAvailable
+import com.judahben149.motiontraction.utils.NetworkUtils
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -32,7 +32,8 @@ import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val moviesService: MovieService,
-    private val database: MovieDatabase
+    private val database: MovieDatabase,
+    private val networkUtils: NetworkUtils
 ) : MovieRepository {
 
     @Inject
@@ -61,7 +62,7 @@ class MovieRepositoryImpl @Inject constructor(
     @WorkerThread
     override fun getMovieDetail(id: Int): Observable<OperationResult<MovieDetailEntity>> {
 
-        if (isNetworkAvailable(appContext)) {
+        if (networkUtils.isNetworkAvailable()) {
             return try {
                 moviesService.fetchMovieDetail(id)
                     .subscribeOn(Schedulers.io())
@@ -100,7 +101,7 @@ class MovieRepositoryImpl @Inject constructor(
     @WorkerThread
     override fun getMovieCredits(id: Int): Observable<OperationResult<CreditsEntity>> {
 
-        if (isNetworkAvailable(appContext)) {
+        if (networkUtils.isNetworkAvailable()) {
             return try {
                 moviesService.fetchMovieCredits(id)
                     .subscribeOn(Schedulers.io())
