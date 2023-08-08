@@ -3,12 +3,13 @@ package com.judahben149.motiontraction.presentation.movieDetail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.judahben149.motiontraction.data.repository.MovieRepositoryImpl
-import com.judahben149.motiontraction.utils.OperationResult
 import com.judahben149.motiontraction.data.source.local.entity.credits.CreditsEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
 import com.judahben149.motiontraction.domain.mappers.toCredits
 import com.judahben149.motiontraction.domain.mappers.toDetailMovie
+import com.judahben149.motiontraction.domain.usecase.GetMovieCreditsUseCase
+import com.judahben149.motiontraction.domain.usecase.GetMovieDetailsUseCase
+import com.judahben149.motiontraction.utils.OperationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -18,7 +19,10 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val repository: MovieRepositoryImpl) : ViewModel() {
+class MovieDetailViewModel @Inject constructor(
+    private val detailsUseCase: GetMovieDetailsUseCase,
+    private val creditsUseCase: GetMovieCreditsUseCase
+) : ViewModel() {
 
     private var _state: MutableLiveData<MovieDetailUiState> = MutableLiveData(MovieDetailUiState())
     val state: LiveData<MovieDetailUiState> = _state
@@ -30,8 +34,8 @@ class MovieDetailViewModel @Inject constructor(private val repository: MovieRepo
         clearError()
 
         Observable.merge(
-            repository.getMovieDetail(movieId).subscribeOn(Schedulers.io()),
-            repository.getMovieCredits(movieId).subscribeOn(Schedulers.io())
+            detailsUseCase.getMovieDetail(movieId).subscribeOn(Schedulers.io()),
+            creditsUseCase.getMovieCredits(movieId).subscribeOn(Schedulers.io())
         ).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(getMovieObserver())
