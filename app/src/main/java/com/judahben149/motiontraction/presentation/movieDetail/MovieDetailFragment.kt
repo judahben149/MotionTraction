@@ -35,17 +35,23 @@ class MovieDetailFragment : Fragment() {
         binding.btnBack.setOnClickListener { navController.popBackStack() }
         binding.epoxyRvMovieDetail.setController(controller)
 
-        val id = arguments?.getInt("MOVIE_ID")
-        id?.let { movieId = it }
+        observeState()
+        makeRequest()
+    }
 
+    private fun observeState() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
-            if (state.isGetMovieCastSuccessful && state.isGetMovieDetailSuccessful) {
+            if (state.isGetMovieDetailSuccessful && state.isGetMovieCastSuccessful) {
                 controller.setData(state)
             }
         }
+    }
 
-        viewModel.getMovieDetail(movieId)
-        viewModel.getMovieCredits(movieId)
+    private fun makeRequest() {
+        val id = arguments?.getInt("MOVIE_ID")
+        id?.let { movieId = it }
+
+        viewModel.getMovie(movieId)
     }
 
     override fun onDestroy() {
