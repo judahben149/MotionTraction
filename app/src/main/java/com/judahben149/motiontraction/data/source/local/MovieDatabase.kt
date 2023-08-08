@@ -12,7 +12,7 @@ import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieEn
 import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
 
 @Database(entities = [MovieResponseEntity.MovieEntity::class, MovieEntityRemoteKey::class, MovieDetailEntity::class, CreditsEntity::class], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
+@TypeConverters(TypeConverters::class)
 abstract class MovieDatabase: RoomDatabase() {
     abstract val movieDao: MovieDao
     abstract val creditsDao: CreditsDao

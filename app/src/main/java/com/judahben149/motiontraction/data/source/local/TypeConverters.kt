@@ -10,7 +10,7 @@ import com.judahben149.motiontraction.data.source.local.entity.movieDetail.Produ
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.ProductionCountryEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.SpokenLanguageEntity
 
-class Converters {
+class TypeConverters {
     @TypeConverter
     fun fromCastEntityList(value: List<CastEntity>): String {
         return Gson().toJson(value)
