@@ -1,6 +1,5 @@
 package com.judahben149.motiontraction.data.repository
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.WorkerThread
 import androidx.paging.ExperimentalPagingApi
@@ -8,6 +7,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
+import com.judahben149.motiontraction.utils.OperationResult
 import com.judahben149.motiontraction.data.source.local.MovieDatabase
 import com.judahben149.motiontraction.data.source.local.entity.credits.CreditsEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
@@ -26,6 +26,8 @@ import com.judahben149.motiontraction.utils.isNetworkAvailable
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -56,52 +58,78 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
 
-    @SuppressLint("CheckResult")
     @WorkerThread
-    override fun getMovieDetail(id: Int): Observable<MovieDetailEntity> {
-
+    override fun getMovieDetail(id: Int): Observable<OperationResult<MovieDetailEntity>> {
 
         if (isNetworkAvailable(appContext)) {
-            val apiResult = moviesService.fetchMovieDetail(id)
-
-            apiResult.subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe(
-                    { result ->
+            return try {
+                moviesService.fetchMovieDetail(id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .flatMap { result ->
                         if (result.isSuccessful) {
-                            val creditsEntity = result.body()?.toMovieDetailEntity()
-                            creditsEntity?.let { database.movieDao.saveMovie(it) }
-                        }
-                    },
-                    { throwable ->
+                            val detailEntity = result.body()?.toMovieDetailEntity()
 
-                    })
+                            if (detailEntity != null) {
+                                database.movieDao.saveMovie(detailEntity)
+                                Observable.just(OperationResult.Success(detailEntity))
+                            } else {
+                                Observable.just(OperationResult.Error("Empty API result"))
+                            }
+                        } else {
+                            Observable.just(OperationResult.Error("Error fetching movie details - ${result.message()}"))
+                        }
+                    }
+            } catch (e: HttpException) {
+                Observable.just(OperationResult.Error("API Error - ${e.message.toString()}"))
+            } catch (e: IOException) {
+                Observable.just(OperationResult.Error("Could not establish connection - ${e.message.toString()}"))
+            } catch (e: Exception) {
+                Observable.just(OperationResult.Error("General exception - ${e.message.toString()}"))
+            }
         }
 
         return database.movieDao.getMovie(id.toLong())
+            .flatMap {
+                Observable.just<OperationResult<MovieDetailEntity>>(OperationResult.Success(it))
+            }
+            .onErrorReturn { OperationResult.Error(it.message.toString()) }
     }
 
-    @SuppressLint("CheckResult")
+
     @WorkerThread
-    override fun getMovieCredits(id: Int): Observable<CreditsEntity> {
+    override fun getMovieCredits(id: Int): Observable<OperationResult<CreditsEntity>> {
 
         if (isNetworkAvailable(appContext)) {
-            val apiResult = moviesService.fetchMovieCredits(id)
-
-            apiResult.subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe(
-                    { result ->
+            return try {
+                moviesService.fetchMovieCredits(id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .flatMap { result ->
                         if (result.isSuccessful) {
                             val creditsEntity = result.body()?.toCreditsEntity()
-                            creditsEntity?.let { database.creditsDao.saveCredit(it) }
-                        }
-                    },
-                    { throwable ->
 
-                    })
+                            if (creditsEntity != null) {
+                                database.creditsDao.saveCredit(creditsEntity)
+                                Observable.just(OperationResult.Success(creditsEntity))
+                            } else {
+                                Observable.just(OperationResult.Error("Empty API result"))
+                            }
+                        } else {
+                            Observable.just(OperationResult.Error("Error fetching movie credits - ${result.message()}"))
+                        }
+                    }
+            } catch (e: HttpException) {
+                Observable.just(OperationResult.Error("API Error - ${e.message.toString()}"))
+            } catch (e: IOException) {
+                Observable.just(OperationResult.Error("Could not establish connection - ${e.message.toString()}"))
+            } catch (e: Exception) {
+                Observable.just(OperationResult.Error("General exception - ${e.message.toString()}"))
+            }
         }
 
         return database.creditsDao.getCredit(id)
+            .flatMap { Observable.just<OperationResult<CreditsEntity>>(OperationResult.Success(it)) }
+            .onErrorReturn { OperationResult.Error(it.message.toString()) }
     }
 }

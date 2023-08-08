@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.judahben149.motiontraction.databinding.FragmentMovieDetailBinding
 import com.judahben149.motiontraction.presentation.movieDetail.epoxy.MovieDetailEpoxyController
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,6 +44,10 @@ class MovieDetailFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
             if (state.isGetMovieDetailSuccessful && state.isGetMovieCastSuccessful) {
                 controller.setData(state)
+            }
+
+            if (state.isError) {
+                Snackbar.make(binding.root, state.errorMessage, Snackbar.LENGTH_LONG).show()
             }
         }
     }

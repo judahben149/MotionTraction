@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.judahben149.motiontraction.data.repository.MovieRepositoryImpl
+import com.judahben149.motiontraction.utils.OperationResult
 import com.judahben149.motiontraction.data.source.local.entity.credits.CreditsEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
 import com.judahben149.motiontraction.domain.mappers.toCredits
@@ -37,8 +38,8 @@ class MovieDetailViewModel @Inject constructor(private val repository: MovieRepo
             .subscribe(getMovieObserver())
     }
 
-    private fun getMovieObserver() : Observer<Any> {
-        return object : Observer<Any> {
+    private fun getMovieObserver() : Observer<OperationResult<Any>> {
+        return object : Observer<OperationResult<Any>>{
             override fun onSubscribe(d: Disposable) {
                 disposable = d
                 toggleLoadingState(true)
@@ -53,23 +54,38 @@ class MovieDetailViewModel @Inject constructor(private val repository: MovieRepo
                 toggleLoadingState(false)
             }
 
-            override fun onNext(item: Any) {
-                if (item is MovieDetailEntity) {
-                    _state.value = _state.value?.copy(
-                        movieDetail = item.toDetailMovie(),
-                        isGetMovieDetailSuccessful = true
-                    )
-                    toggleLoadingState(!(_state.value?.isGetMovieDetailSuccessful == true && _state.value?.isGetMovieCastSuccessful == true))
-                }
-                else if (item is CreditsEntity) {
-                    _state.value = _state.value?.copy(
-                        credits = item.toCredits(),
-                        isGetMovieCastSuccessful = true
-                    )
-                    toggleLoadingState(!(_state.value?.isGetMovieDetailSuccessful == true && _state.value?.isGetMovieCastSuccessful == true))
+            override fun onNext(item: OperationResult<Any>) {
+                when(item) {
+                    is OperationResult.Success -> {
+                        handleSuccessResult(item.data)
+                    }
+                    is OperationResult.Error -> {
+                        handleErrorResult(item.errorMessage)
+                    }
                 }
             }
         }
+    }
+
+    private fun handleSuccessResult(item: Any) {
+        if (item is MovieDetailEntity) {
+            _state.value = _state.value?.copy(
+                movieDetail = item.toDetailMovie(),
+                isGetMovieDetailSuccessful = true
+            )
+            toggleLoadingState(!(_state.value?.isGetMovieDetailSuccessful == true && _state.value?.isGetMovieCastSuccessful == true))
+        }
+        else if (item is CreditsEntity) {
+            _state.value = _state.value?.copy(
+                credits = item.toCredits(),
+                isGetMovieCastSuccessful = true
+            )
+            toggleLoadingState(!(_state.value?.isGetMovieDetailSuccessful == true && _state.value?.isGetMovieCastSuccessful == true))
+        }
+    }
+
+    private fun handleErrorResult(errorMessage: String) {
+        postError(errorMessage)
     }
 
     private fun toggleLoadingState(isLoading: Boolean) {
