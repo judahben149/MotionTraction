@@ -18,8 +18,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val repository: MovieRepositoryImpl) :
-    ViewModel() {
+class MovieDetailViewModel @Inject constructor(private val repository: MovieRepositoryImpl) : ViewModel() {
 
     private var _state: MutableLiveData<MovieDetailUiState> = MutableLiveData(MovieDetailUiState())
     val state: LiveData<MovieDetailUiState> = _state
