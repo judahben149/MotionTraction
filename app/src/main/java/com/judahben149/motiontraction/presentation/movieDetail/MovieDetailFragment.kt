@@ -39,7 +39,7 @@ class MovieDetailFragment : Fragment() {
         id?.let { movieId = it }
 
         viewModel.state.observe(viewLifecycleOwner) { state ->
-            if (state.isGetMovieCastSuccessful) {
+            if (state.isGetMovieCastSuccessful && state.isGetMovieDetailSuccessful) {
                 controller.setData(state)
             }
         }

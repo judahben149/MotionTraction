@@ -1,7 +1,7 @@
 package com.judahben149.motiontraction.domain.mappers
 
-import com.judahben149.motiontraction.data.source.local.entity.MovieDetailEntity
-import com.judahben149.motiontraction.data.source.local.entity.MovieResponseEntity
+import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
+import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
 import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.GenreDto
 import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.MovieDetailDto
 import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.ProductionCompanyDto

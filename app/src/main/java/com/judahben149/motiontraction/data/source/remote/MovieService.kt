@@ -17,8 +17,8 @@ interface MovieService {
     fun fetchDiscoverMoviesList(@Query("page") pageNumber: Int): Single<PopularMoviesListDto>
 
     @GET("movie/{movie_id}")
-    fun fetchMovieDetail(@Path("movie_id") id: Int) : Single<Response<MovieDetailDto>>
+    fun fetchMovieDetail(@Path("movie_id") id: Int) : Observable<Response<MovieDetailDto>>
 
     @GET("movie/{movie_id}/credits")
-    fun fetchMovieCredits(@Path("movie_id") id: Int) : Observable<CreditsDto>
+    fun fetchMovieCredits(@Path("movie_id") id: Int) : Observable<Response<CreditsDto>>
 }

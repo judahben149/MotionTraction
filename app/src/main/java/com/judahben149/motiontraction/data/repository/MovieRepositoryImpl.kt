@@ -9,11 +9,12 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.judahben149.motiontraction.data.source.local.MovieDatabase
-import com.judahben149.motiontraction.data.source.local.entity.MovieDetailEntity
-import com.judahben149.motiontraction.data.source.local.entity.MovieResponseEntity
+import com.judahben149.motiontraction.data.source.local.entity.credits.CreditsEntity
+import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
+import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
 import com.judahben149.motiontraction.data.source.paging.PopularMoviesRXRemoteMediator
 import com.judahben149.motiontraction.data.source.remote.MovieService
-import com.judahben149.motiontraction.data.source.remote.dto.credits.CreditsDto
+import com.judahben149.motiontraction.domain.mappers.toCreditsEntity
 import com.judahben149.motiontraction.domain.mappers.toMovieDetailEntity
 import com.judahben149.motiontraction.domain.repository.MovieRepository
 import com.judahben149.motiontraction.utils.Constants.INITIAL_LOAD_SIZE
@@ -21,7 +22,6 @@ import com.judahben149.motiontraction.utils.Constants.MAX_LOAD_SIZE
 import com.judahben149.motiontraction.utils.Constants.NETWORK_PAGE_SIZE
 import com.judahben149.motiontraction.utils.Constants.PRE_FETCH_DISTANCE
 import com.judahben149.motiontraction.utils.Constants.STARTING_PAGE_INDEX
-import com.judahben149.motiontraction.utils.NetworkUtils
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -58,31 +58,42 @@ class MovieRepositoryImpl @Inject constructor(
     @SuppressLint("CheckResult")
     @WorkerThread
     override fun getMovieDetail(id: Int): Observable<MovieDetailEntity> {
+        val apiResult = moviesService.fetchMovieDetail(id)
 
-        if (NetworkUtils.isNetworkAvailable(appContext)) {
-            val apiResult = moviesService.fetchMovieDetail(id)
+        apiResult.subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe(
+                { result ->
+                    if (result.isSuccessful) {
+                        val creditsEntity = result.body()?.toMovieDetailEntity()
+                        creditsEntity?.let { database.movieDao.saveMovie(it) }
+                    }
+                },
+                { throwable ->
 
-            apiResult.subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe(
-                    { result ->
-                        if (result.isSuccessful) {
-                            val detailEntity = result.body()?.toMovieDetailEntity()
-                            detailEntity?.let { database.movieDao.saveMovie(it) }
-                        }
-                    },
-                    { throwable ->
-
-                    })
-        }
+                })
 
         return database.movieDao.getMovie(id.toLong())
     }
 
+    @SuppressLint("CheckResult")
     @WorkerThread
-    override fun getMovieCredits(id: Int): Observable<CreditsDto> {
-        val result = moviesService.fetchMovieCredits(id)
+    override fun getMovieCredits(id: Int): Observable<CreditsEntity> {
+        val apiResult = moviesService.fetchMovieCredits(id)
 
-        return result
+        apiResult.subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .subscribe(
+                { result ->
+                    if (result.isSuccessful) {
+                        val creditsEntity = result.body()?.toCreditsEntity()
+                        creditsEntity?.let { database.creditsDao.saveCredit(it) }
+                    }
+                },
+                { throwable ->
+
+                })
+
+        return database.creditsDao.getCredit(id)
     }
 }

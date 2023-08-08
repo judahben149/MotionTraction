@@ -92,12 +92,12 @@ class MovieDetailViewModel @Inject constructor(private val repository: MovieRepo
             }
 
             override fun onNext(credits: Credits) {
-                if (_state.value?.isGetMovieDetailSuccessful == true) {
+//                if (_state.value?.isGetMovieDetailSuccessful == true) {
                     _state.value = _state.value?.copy(
                         credits = credits,
                         isGetMovieCastSuccessful = true
                     )
-                }
+//                }
 
                 toggleLoadingState(!(_state.value?.isGetMovieDetailSuccessful == true && _state.value?.isGetMovieCastSuccessful == true))
             }

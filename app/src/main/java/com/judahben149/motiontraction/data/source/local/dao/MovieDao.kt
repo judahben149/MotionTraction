@@ -1,12 +1,12 @@
-package com.judahben149.motiontraction.data.source.local
+package com.judahben149.motiontraction.data.source.local.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.judahben149.motiontraction.data.source.local.entity.MovieDetailEntity
-import com.judahben149.motiontraction.data.source.local.entity.MovieResponseEntity
+import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
+import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
 import io.reactivex.Observable
 
 @Dao
