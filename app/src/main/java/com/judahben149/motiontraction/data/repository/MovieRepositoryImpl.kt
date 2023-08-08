@@ -22,6 +22,7 @@ import com.judahben149.motiontraction.utils.Constants.MAX_LOAD_SIZE
 import com.judahben149.motiontraction.utils.Constants.NETWORK_PAGE_SIZE
 import com.judahben149.motiontraction.utils.Constants.PRE_FETCH_DISTANCE
 import com.judahben149.motiontraction.utils.Constants.STARTING_PAGE_INDEX
+import com.judahben149.motiontraction.utils.isNetworkAvailable
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -33,7 +34,7 @@ class MovieRepositoryImpl @Inject constructor(
 ) : MovieRepository {
 
     @Inject
-   lateinit var appContext: Context
+    lateinit var appContext: Context
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getMovieList(): Flowable<PagingData<MovieResponseEntity.MovieEntity>> {
@@ -58,20 +59,24 @@ class MovieRepositoryImpl @Inject constructor(
     @SuppressLint("CheckResult")
     @WorkerThread
     override fun getMovieDetail(id: Int): Observable<MovieDetailEntity> {
-        val apiResult = moviesService.fetchMovieDetail(id)
 
-        apiResult.subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .subscribe(
-                { result ->
-                    if (result.isSuccessful) {
-                        val creditsEntity = result.body()?.toMovieDetailEntity()
-                        creditsEntity?.let { database.movieDao.saveMovie(it) }
-                    }
-                },
-                { throwable ->
 
-                })
+        if (isNetworkAvailable(appContext)) {
+            val apiResult = moviesService.fetchMovieDetail(id)
+
+            apiResult.subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(
+                    { result ->
+                        if (result.isSuccessful) {
+                            val creditsEntity = result.body()?.toMovieDetailEntity()
+                            creditsEntity?.let { database.movieDao.saveMovie(it) }
+                        }
+                    },
+                    { throwable ->
+
+                    })
+        }
 
         return database.movieDao.getMovie(id.toLong())
     }
@@ -79,20 +84,23 @@ class MovieRepositoryImpl @Inject constructor(
     @SuppressLint("CheckResult")
     @WorkerThread
     override fun getMovieCredits(id: Int): Observable<CreditsEntity> {
-        val apiResult = moviesService.fetchMovieCredits(id)
 
-        apiResult.subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .subscribe(
-                { result ->
-                    if (result.isSuccessful) {
-                        val creditsEntity = result.body()?.toCreditsEntity()
-                        creditsEntity?.let { database.creditsDao.saveCredit(it) }
-                    }
-                },
-                { throwable ->
+        if (isNetworkAvailable(appContext)) {
+            val apiResult = moviesService.fetchMovieCredits(id)
 
-                })
+            apiResult.subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(
+                    { result ->
+                        if (result.isSuccessful) {
+                            val creditsEntity = result.body()?.toCreditsEntity()
+                            creditsEntity?.let { database.creditsDao.saveCredit(it) }
+                        }
+                    },
+                    { throwable ->
+
+                    })
+        }
 
         return database.creditsDao.getCredit(id)
     }

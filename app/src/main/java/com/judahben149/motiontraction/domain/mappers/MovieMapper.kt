@@ -8,12 +8,12 @@ import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.Product
 import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.ProductionCountryDto
 import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.SpokenLanguageDto
 import com.judahben149.motiontraction.data.source.remote.dto.movieList.PopularMoviesListDto
-import com.judahben149.motiontraction.domain.models.DetailMovie
-import com.judahben149.motiontraction.domain.models.Genre
-import com.judahben149.motiontraction.domain.models.ListMovie
-import com.judahben149.motiontraction.domain.models.ProductionCompany
-import com.judahben149.motiontraction.domain.models.ProductionCountry
-import com.judahben149.motiontraction.domain.models.SpokenLanguage
+import com.judahben149.motiontraction.domain.models.movieDetail.DetailMovie
+import com.judahben149.motiontraction.domain.models.movieDetail.Genre
+import com.judahben149.motiontraction.domain.models.movieList.ListMovie
+import com.judahben149.motiontraction.domain.models.movieDetail.ProductionCompany
+import com.judahben149.motiontraction.domain.models.movieDetail.ProductionCountry
+import com.judahben149.motiontraction.domain.models.movieDetail.SpokenLanguage
 
 
 fun MovieResponseEntity.MovieEntity.toListMovie(): ListMovie {

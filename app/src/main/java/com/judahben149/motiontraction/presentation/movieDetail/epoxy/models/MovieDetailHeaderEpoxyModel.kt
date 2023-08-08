@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import com.judahben149.motiontraction.R
 import com.judahben149.motiontraction.databinding.EpoxyModelDetailHeaderSectionBinding
-import com.judahben149.motiontraction.domain.models.DetailMovie
+import com.judahben149.motiontraction.domain.models.movieDetail.DetailMovie
 import com.judahben149.motiontraction.presentation.shared.epoxy.ViewBindingKotlinModel
 import com.judahben149.motiontraction.utils.loadImage
 import com.judahben149.motiontraction.utils.parseFriendlyDate

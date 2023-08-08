@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.judahben149.motiontraction.R
 import com.judahben149.motiontraction.databinding.ItemCardMovieBinding
-import com.judahben149.motiontraction.domain.models.ListMovie
+import com.judahben149.motiontraction.domain.models.movieList.ListMovie
 import com.judahben149.motiontraction.utils.Constants.BACKDROP_BASE_URL
 import com.judahben149.motiontraction.utils.parseFriendlyDate
 

@@ -1,4 +1,4 @@
-package com.judahben149.motiontraction.domain.models
+package com.judahben149.motiontraction.domain.models.movieDetail
 
 data class DetailMovie(
 

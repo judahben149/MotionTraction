@@ -8,7 +8,7 @@ import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
 import com.judahben149.motiontraction.data.repository.MovieRepositoryImpl
 import com.judahben149.motiontraction.domain.mappers.toListMovie
-import com.judahben149.motiontraction.domain.models.ListMovie
+import com.judahben149.motiontraction.domain.models.movieList.ListMovie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Flowable
 import kotlinx.coroutines.ExperimentalCoroutinesApi

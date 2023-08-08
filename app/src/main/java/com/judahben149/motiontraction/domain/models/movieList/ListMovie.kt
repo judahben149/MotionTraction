@@ -1,4 +1,4 @@
-package com.judahben149.motiontraction.domain.models
+package com.judahben149.motiontraction.domain.models.movieList
 
 data class ListMovie(
     val id: Long = 0L,

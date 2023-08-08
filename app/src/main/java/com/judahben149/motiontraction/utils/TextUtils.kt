@@ -1,6 +1,6 @@
 package com.judahben149.motiontraction.utils
 
-import com.judahben149.motiontraction.domain.models.Genre
+import com.judahben149.motiontraction.domain.models.movieDetail.Genre
 import java.text.SimpleDateFormat
 import java.util.Locale
 

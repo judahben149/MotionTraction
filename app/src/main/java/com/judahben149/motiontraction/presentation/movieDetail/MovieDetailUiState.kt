@@ -1,6 +1,6 @@
 package com.judahben149.motiontraction.presentation.movieDetail
 
-import com.judahben149.motiontraction.domain.models.DetailMovie
+import com.judahben149.motiontraction.domain.models.movieDetail.DetailMovie
 import com.judahben149.motiontraction.domain.models.credits.Credits
 
 data class MovieDetailUiState(
