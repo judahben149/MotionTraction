@@ -5,5 +5,6 @@ data class ListMovie(
     val backdropPath: String = "",
     val title: String = "",
     val releaseDate: String = "",
-    val posterPath: String = ""
+    val posterPath: String = "",
+    val isFavorite: Boolean = false
 )
