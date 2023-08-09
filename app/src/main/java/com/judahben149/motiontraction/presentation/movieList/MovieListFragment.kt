@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.paging.filter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.judahben149.motiontraction.R
 import com.judahben149.motiontraction.databinding.FragmentMovieListBinding
+import com.judahben149.motiontraction.presentation.movieList.adapter.FavoriteMoviesAdapter
 import com.judahben149.motiontraction.presentation.movieList.adapter.MovieListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
@@ -22,7 +22,8 @@ class MovieListFragment : Fragment() {
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var adapter: MovieListAdapter
+    private lateinit var movieListAdapter: MovieListAdapter
+    private lateinit var favMoviesAdapter: FavoriteMoviesAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var layoutManager: LinearLayoutManager
 
@@ -32,7 +33,13 @@ class MovieListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = MovieListAdapter(requireContext()) { id ->
+        movieListAdapter = MovieListAdapter(requireContext()) { id ->
+            val bundle = Bundle()
+            bundle.putInt("MOVIE_ID", id)
+            findNavController().navigate(R.id.MovieDetailFragment, bundle)
+        }
+
+        favMoviesAdapter = FavoriteMoviesAdapter(requireContext()) { id ->
             val bundle = Bundle()
             bundle.putInt("MOVIE_ID", id)
             findNavController().navigate(R.id.MovieDetailFragment, bundle)
@@ -64,31 +71,41 @@ class MovieListFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = adapter
+        recyclerView.adapter = movieListAdapter
+        binding.rvFavoriteMovies.adapter = favMoviesAdapter
+
+        viewModel.getMovieList()
+        viewModel.getFavoriteMovies()
     }
 
     private fun setListeners() {
         binding.swipeRefresh.setOnRefreshListener {
-            adapter.refresh()
+            movieListAdapter.refresh()
             binding.swipeRefresh.isRefreshing = false
         }
     }
 
     private fun collectState() {
-        mDisposable.add(
-            viewModel.getMovieList().subscribe { pagingData ->
-                if (viewModel.state.value?.filterType == MovieType.FAVORITES) {
-                    adapter.submitData(lifecycle, pagingData.filter { it.isFavorite })
-                } else {
-                    adapter.submitData(lifecycle, pagingData)
-                }
-                toggleShimmer(false)
-            }
-        )
+        viewModel.state.observe(viewLifecycleOwner) { state ->
 
-        viewModel.state.observe(viewLifecycleOwner) {
-            if (it.movieList != null) {
-//                toggleShimmer(false)
+            if (state.movieList != null) {
+                mDisposable.add(
+                    state.movieList.subscribe { pagingData ->
+                        movieListAdapter.submitData(lifecycle, pagingData)
+                    }
+                )
+            }
+
+            state.favoriteMovieList?.let {
+                favMoviesAdapter.submitList(it)
+            }
+
+            when (state.filterType) {
+                MovieType.FAVORITES -> {
+                    viewModel.getFavoriteMovies()
+                    toggleAdapterVisibility(true)
+                }
+                MovieType.ALL -> toggleAdapterVisibility(false)
             }
         }
     }
@@ -111,6 +128,16 @@ class MovieListFragment : Fragment() {
 
                 else -> false
             }
+        }
+    }
+
+    private fun toggleAdapterVisibility(isFavorites: Boolean) {
+        if (isFavorites) {
+            binding.swipeRefresh.visibility = View.GONE
+            binding.rvFavoriteMovies.visibility = View.VISIBLE
+        } else {
+            binding.rvFavoriteMovies.visibility = View.GONE
+            binding.swipeRefresh.visibility = View.VISIBLE
         }
     }
 
