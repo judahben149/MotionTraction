@@ -13,6 +13,7 @@
         android:maxHeight="250dp"
         app:layout_constraintDimensionRatio="H,2:1.13"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="1.0"
@@ -29,16 +30,6 @@
         app:layout_constraintStart_toStartOf="@id/iv_backdrop_image"
         app:layout_constraintTop_toTopOf="@id/iv_backdrop_image" />
 
-    <ImageView
-        android:id="@+id/btn_like"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_not_liked"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/like_button" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_movie_title"

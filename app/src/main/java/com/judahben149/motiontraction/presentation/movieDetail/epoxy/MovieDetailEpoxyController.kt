@@ -20,8 +20,8 @@ class MovieDetailEpoxyController(
             ProgressScreenEpoxyModel("").id("progress_screen").addTo(this)
         } else {
             onLoadedItemsComplete()
-            MovieDetailHeaderEpoxyModel(context, state.movieDetail, { onMovieLiked() }).id("detail_header").addTo(this)
-            MovieDetailBodyEpoxyModel(state.movieDetail).id("detail_body").addTo(this)
+            MovieDetailHeaderEpoxyModel(context, state.movieDetail).id("detail_header").addTo(this)
+            MovieDetailBodyEpoxyModel(state.movieDetail, { onMovieLiked() }).id("detail_body").addTo(this)
             MovieDetailCastEpoxyModel(context, state.credits).id("detail_cast").addTo(this)
         }
     }

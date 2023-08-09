@@ -13,8 +13,7 @@ import com.judahben149.motiontraction.utils.parseRunTime
 
 data class MovieDetailHeaderEpoxyModel(
     val context: Context,
-    val movie: DetailMovie,
-    val onLiked: () -> Unit
+    val movie: DetailMovie
 ): ViewBindingKotlinModel<EpoxyModelDetailHeaderSectionBinding>(R.layout.epoxy_model_detail_header_section) {
 
     override fun EpoxyModelDetailHeaderSectionBinding.bind() {
@@ -30,8 +29,5 @@ data class MovieDetailHeaderEpoxyModel(
         }
 
         ivBackdropImage.loadImage(context, movie.backdropPath) { progressBar.visibility = View.INVISIBLE }
-        btnLike.setOnClickListener { onLiked() }
-
-        btnLike.setImageResource(if (movie.isFavorite) R.drawable.ic_liked else R.drawable.ic_not_liked)
     }
 }
