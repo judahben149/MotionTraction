@@ -1,10 +1,11 @@
 package com.judahben149.motiontraction.di.module
 
 import com.judahben149.motiontraction.data.repository.MovieRepositoryImpl
-import com.judahben149.motiontraction.domain.usecase.GetMovieCreditsUseCase
-import com.judahben149.motiontraction.domain.usecase.GetMovieDetailsUseCase
-import com.judahben149.motiontraction.domain.usecase.GetMoviePagedListUseCase
-import com.judahben149.motiontraction.domain.usecase.UpdateFavoritesUseCase
+import com.judahben149.motiontraction.domain.usecase.favoriteMovies.GetFavoriteMoviesUseCase
+import com.judahben149.motiontraction.domain.usecase.credits.GetMovieCreditsUseCase
+import com.judahben149.motiontraction.domain.usecase.favoriteMovies.SaveFavoriteMovieUseCase
+import com.judahben149.motiontraction.domain.usecase.movieDetail.GetMovieDetailsUseCase
+import com.judahben149.motiontraction.domain.usecase.movieList.GetMoviePagedListUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,7 +36,13 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun providesUpdateFavoritesUseCase(repository: MovieRepositoryImpl): UpdateFavoritesUseCase {
-        return UpdateFavoritesUseCase(repository)
+    fun providesGetFavoriteMoviesUseCase(repository: MovieRepositoryImpl): GetFavoriteMoviesUseCase {
+        return GetFavoriteMoviesUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesSaveFavoriteMovieUseCase(repository: MovieRepositoryImpl): SaveFavoriteMovieUseCase {
+        return SaveFavoriteMovieUseCase(repository)
     }
 }
