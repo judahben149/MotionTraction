@@ -6,14 +6,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.movieDetail.MovieDetailFragment">
 
-    <com.airbnb.epoxy.EpoxyRecyclerView
-        android:id="@+id/epoxy_rv_movie_detail"
+    <include android:id="@+id/shimmer_layout_detail"
+        layout="@layout/layout_movie_list_shimmer" />
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
+
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/epoxy_rv_movie_detail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <FrameLayout
         android:id="@+id/btn_back"
