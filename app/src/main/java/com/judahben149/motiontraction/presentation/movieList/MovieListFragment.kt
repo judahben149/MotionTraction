@@ -31,6 +31,7 @@ class MovieListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         adapter = MovieListAdapter(requireContext()) { id ->
             val bundle = Bundle()
             bundle.putInt("MOVIE_ID", id)
