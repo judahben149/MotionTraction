@@ -18,17 +18,17 @@ fun String.parseFriendlyDate(): String {
 }
 
 fun Int.parseRunTime(): String {
-    var hours = 0
-    var minutes = 0
+    val hours: Int
+    val minutes: Int
 
     return if (this >= 60) {
         hours = this / 60
         minutes = this % 60
-        "${hours.toString()}h ${minutes.toString()}m"
+        "${hours}h ${minutes}m"
     }
     else {
         minutes = this
-        "${minutes.toString()}m"
+        "${minutes}m"
     }
 }
 
