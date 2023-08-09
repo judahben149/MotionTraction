@@ -4,6 +4,7 @@ import com.judahben149.motiontraction.data.repository.MovieRepositoryImpl
 import com.judahben149.motiontraction.domain.usecase.GetMovieCreditsUseCase
 import com.judahben149.motiontraction.domain.usecase.GetMovieDetailsUseCase
 import com.judahben149.motiontraction.domain.usecase.GetMoviePagedListUseCase
+import com.judahben149.motiontraction.domain.usecase.UpdateFavoritesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,5 +31,11 @@ object UseCaseModule {
     @Singleton
     fun providesGetMoviePagedListUseCase(repository: MovieRepositoryImpl): GetMoviePagedListUseCase {
         return GetMoviePagedListUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesUpdateFavoritesUseCase(repository: MovieRepositoryImpl): UpdateFavoritesUseCase {
+        return UpdateFavoritesUseCase(repository)
     }
 }
