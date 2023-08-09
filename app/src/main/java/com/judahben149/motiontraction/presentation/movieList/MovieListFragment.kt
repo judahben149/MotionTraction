@@ -58,6 +58,7 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         toggleShimmer(true)
+        updateOptionMenu()
         initViews()
         setListeners()
         collectState()
@@ -128,6 +129,20 @@ class MovieListFragment : Fragment() {
                 }
 
                 else -> false
+            }
+        }
+    }
+
+    private fun updateOptionMenu() {
+        viewModel.state.observe(viewLifecycleOwner) {
+            if (it.filterType == MovieType.FAVORITES) {
+                binding.toolbar.menu.findItem(R.id.action_show_favorites).isVisible = false
+                binding.toolbar.menu.findItem(R.id.action_show_all).isVisible = true
+                binding.tvToolbarTitle.text = getString(R.string.favorites)
+            } else {
+                binding.toolbar.menu.findItem(R.id.action_show_all).isVisible = false
+                binding.toolbar.menu.findItem(R.id.action_show_favorites).isVisible = true
+                binding.tvToolbarTitle.text = getString(R.string.popular)
             }
         }
     }
