@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.judahben149.motiontraction.data.source.local.entity.credits.CreditsEntity
+import com.judahben149.motiontraction.data.source.local.entity.favoriteMovies.FavoriteMovieEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
 import com.judahben149.motiontraction.domain.mappers.toCredits
 import com.judahben149.motiontraction.domain.mappers.toDetailMovie
-import com.judahben149.motiontraction.domain.usecase.GetMovieCreditsUseCase
-import com.judahben149.motiontraction.domain.usecase.GetMovieDetailsUseCase
-import com.judahben149.motiontraction.domain.usecase.UpdateFavoritesUseCase
+import com.judahben149.motiontraction.domain.usecase.credits.GetMovieCreditsUseCase
+import com.judahben149.motiontraction.domain.usecase.favoriteMovies.SaveFavoriteMovieUseCase
+import com.judahben149.motiontraction.domain.usecase.movieDetail.GetMovieDetailsUseCase
 import com.judahben149.motiontraction.utils.OperationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
@@ -23,7 +24,7 @@ import javax.inject.Inject
 class MovieDetailViewModel @Inject constructor(
     private val detailsUseCase: GetMovieDetailsUseCase,
     private val creditsUseCase: GetMovieCreditsUseCase,
-    private val updateFavoritesUseCase: UpdateFavoritesUseCase
+    private val saveFavoriteMovieUseCase: SaveFavoriteMovieUseCase,
 ) : ViewModel() {
 
     private var _state: MutableLiveData<MovieDetailUiState> = MutableLiveData(MovieDetailUiState())
@@ -89,20 +90,27 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    private fun handleErrorResult(errorMessage: String) {
-        postError(errorMessage)
-    }
+    private fun handleErrorResult(errorMessage: String) { postError(errorMessage) }
 
-    fun toggleIsFavorite() {
-        val isFavorite = _state.value!!.movieDetail.isFavorite
+    fun addToFavorites() {
+        _state.value?.movieDetail?.apply {
+            val favoriteMovieEntity = FavoriteMovieEntity(
+                movieId = this.id,
+                adult = this.adult,
+                backdropPath = this.backdropPath,
+                originalTitle = this.originalTitle,
+                popularity = this.popularity,
+                posterPath = this.posterPath,
+                releaseDate = this.releaseDate,
+                runtime = this.runtime,
+                tagline = this.tagline,
+                title = this.title,
+                voteAverage = this.voteAverage,
+                voteCount = this.voteCount
+            )
 
-        _state.value = _state.value?.copy(
-            movieDetail = _state.value!!.movieDetail.copy(isFavorite = !isFavorite)
-        )
-        updateFavoritesUseCase.updateIsFavorite(
-            movieId = _state.value!!.movieDetail.id,
-            isFavorite = !isFavorite
-        )
+            saveFavoriteMovieUseCase.saveFavoriteMovie(favoriteMovieEntity)
+        }
     }
 
     private fun toggleLoadingState(isLoading: Boolean) {

@@ -76,7 +76,7 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun handleLikeAction() {
-        viewModel.toggleIsFavorite()
+        viewModel.addToFavorites()
     }
 
     private fun toggleShimmer(shouldStart: Boolean) {

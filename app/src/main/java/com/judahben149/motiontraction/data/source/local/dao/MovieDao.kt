@@ -9,6 +9,7 @@ import androidx.room.Update
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntityUpdate
 import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -38,6 +39,9 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies ORDER BY id ASC")
     fun getAllMovies(): PagingSource<Int, MovieResponseEntity.MovieEntity>
+
+    @Query("SELECT * FROM movies WHERE isFavorite = 1")
+    fun getAllFavoriteMovies(): Flowable<List<MovieResponseEntity.MovieEntity>>
 
     @Query("DELETE FROM movies")
     fun deleteAllMovies()
