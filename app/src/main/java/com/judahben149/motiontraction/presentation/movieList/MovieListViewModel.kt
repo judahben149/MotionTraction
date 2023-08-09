@@ -26,7 +26,7 @@ class MovieListViewModel @Inject constructor(private val movieListUseCase: GetMo
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getMovieList(): Flowable<PagingData<ListMovie>> {
-        return if (movieList == null) {
+        return if (_state.value?.movieList == null) {
             val filteredMovieList = movieListUseCase.getMoviePagedList()
                 .map { it.filter { movieEntity -> movieEntity.posterPath.isNotEmpty() } }
                 .map { it.map { movieEntity -> movieEntity.toListMovie() } }
@@ -40,10 +40,10 @@ class MovieListViewModel @Inject constructor(private val movieListUseCase: GetMo
                 }
             }
 
-            movieList = filteredAndSortedMovieList.cachedIn(viewModelScope)
-            movieList!!
+            _state.value = _state.value?.copy(movieList = filteredAndSortedMovieList.cachedIn(viewModelScope))
+            _state.value?.movieList!!
         } else {
-            movieList!!
+            _state.value?.movieList!!
         }
     }
 

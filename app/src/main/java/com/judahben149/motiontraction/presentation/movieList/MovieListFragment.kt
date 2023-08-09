@@ -49,9 +49,10 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        toggleShimmer(true)
         initViews()
         setListeners()
-        collectMoviePagedList()
+        collectState()
     }
 
 
@@ -72,36 +73,58 @@ class MovieListFragment : Fragment() {
         }
     }
 
-    private fun collectMoviePagedList() {
+    private fun collectState() {
         mDisposable.add(
             viewModel.getMovieList().subscribe { pagingData ->
                 if (viewModel.state.value?.filterType == MovieType.FAVORITES) {
                     adapter.submitData(lifecycle, pagingData.filter { it.isFavorite })
-                    binding.toolbar.menu.findItem(R.id.action_filter_favorites).title = "Show all"
                 } else {
                     adapter.submitData(lifecycle, pagingData)
-                    binding.toolbar.menu.findItem(R.id.action_filter_favorites).title = "Filter favorites"
                 }
+                toggleShimmer(false)
             }
         )
+
+        viewModel.state.observe(viewLifecycleOwner) {
+            if (it.movieList != null) {
+//                toggleShimmer(false)
+            }
+        }
     }
 
     private fun setupOptionsMenu() {
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.action_filter_favorites -> {
-                    if (viewModel.state.value?.filterType == MovieType.ALL) {
-                        viewModel.updateFilter(MovieType.FAVORITES)
-                    } else {
-                        viewModel.updateFilter(MovieType.ALL)
-                    }
-
+                R.id.action_show_favorites -> {
+                    viewModel.updateFilter(MovieType.FAVORITES)
+                    binding.toolbar.menu.findItem(R.id.action_show_favorites).isVisible = false
+                    binding.toolbar.menu.findItem(R.id.action_show_all).isVisible = true
+                    true
+                }
+                R.id.action_show_all -> {
+                    viewModel.updateFilter(MovieType.ALL)
+                    binding.toolbar.menu.findItem(R.id.action_show_all).isVisible = false
+                    binding.toolbar.menu.findItem(R.id.action_show_favorites).isVisible = true
                     true
                 }
 
                 else -> false
             }
         }
+    }
+
+    private fun toggleShimmer(shouldStart: Boolean) {
+        if (shouldStart) {
+            binding.shimmerLayout.startShimmer()
+        } else {
+            binding.shimmerLayout.visibility = View.INVISIBLE
+            binding.shimmerLayout.stopShimmer()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        toggleShimmer(false)
     }
 
     override fun onDestroy() {

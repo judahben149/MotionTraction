@@ -12,6 +12,7 @@ import com.judahben149.motiontraction.R
 import com.judahben149.motiontraction.databinding.ItemCardMovieBinding
 import com.judahben149.motiontraction.domain.models.movieList.ListMovie
 import com.judahben149.motiontraction.utils.Constants.BACKDROP_BASE_URL
+import com.judahben149.motiontraction.utils.loadImage
 import com.judahben149.motiontraction.utils.parseFriendlyDate
 
 class MovieListAdapter(
@@ -29,11 +30,7 @@ class MovieListAdapter(
                 onMovieItemClicked(listMovieItem.id.toInt())
             }
 
-            Glide.with(context)
-                .load(BACKDROP_BASE_URL + listMovieItem.posterPath)
-                .placeholder(R.drawable.poster_placeholder)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.ivMovieImage)
+            binding.ivMovieImage.loadImage(context, BACKDROP_BASE_URL + listMovieItem.posterPath) { }
         }
     }
 
