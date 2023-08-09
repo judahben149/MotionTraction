@@ -8,14 +8,14 @@ import com.judahben149.motiontraction.presentation.movieDetail.epoxy.models.Movi
 import com.judahben149.motiontraction.presentation.movieDetail.epoxy.models.MovieDetailHeaderEpoxyModel
 import com.judahben149.motiontraction.presentation.shared.epoxy.models.ProgressScreenEpoxyModel
 
-class MovieDetailEpoxyController(private val context: Context): TypedEpoxyController<MovieDetailUiState>() {
+class MovieDetailEpoxyController(private val context: Context, private val onLiked: ()-> Unit): TypedEpoxyController<MovieDetailUiState>() {
 
     override fun buildModels(state: MovieDetailUiState?) {
 
         if (state == null || state.isLoading) {
             ProgressScreenEpoxyModel("").id("progress_screen").addTo(this)
         } else {
-            MovieDetailHeaderEpoxyModel(context, state.movieDetail).id("detail_header").addTo(this)
+            MovieDetailHeaderEpoxyModel(context, state.movieDetail, { onLiked() }).id("detail_header").addTo(this)
             MovieDetailBodyEpoxyModel(state.movieDetail).id("detail_body").addTo(this)
             MovieDetailCastEpoxyModel(context, state.credits).id("detail_cast").addTo(this)
         }

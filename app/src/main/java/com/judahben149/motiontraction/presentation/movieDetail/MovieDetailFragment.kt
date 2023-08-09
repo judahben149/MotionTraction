@@ -20,7 +20,9 @@ class MovieDetailFragment : Fragment() {
     private var movieId: Int = 0
 
     private val viewModel: MovieDetailViewModel by viewModels()
-    private val controller by lazy { MovieDetailEpoxyController(requireContext()) }
+    private val controller by lazy {
+        MovieDetailEpoxyController(requireContext()) { handleLikeAction() }
+    }
     private val navController by lazy { findNavController() }
 
     override fun onCreateView(
@@ -57,6 +59,10 @@ class MovieDetailFragment : Fragment() {
         id?.let { movieId = it }
 
         viewModel.getMovie(movieId)
+    }
+
+    private fun handleLikeAction() {
+        viewModel.toggleIsFavorite()
     }
 
     override fun onDestroy() {

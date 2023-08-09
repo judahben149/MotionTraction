@@ -9,6 +9,7 @@ import com.judahben149.motiontraction.domain.mappers.toCredits
 import com.judahben149.motiontraction.domain.mappers.toDetailMovie
 import com.judahben149.motiontraction.domain.usecase.GetMovieCreditsUseCase
 import com.judahben149.motiontraction.domain.usecase.GetMovieDetailsUseCase
+import com.judahben149.motiontraction.domain.usecase.UpdateFavoritesUseCase
 import com.judahben149.motiontraction.utils.OperationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     private val detailsUseCase: GetMovieDetailsUseCase,
-    private val creditsUseCase: GetMovieCreditsUseCase
+    private val creditsUseCase: GetMovieCreditsUseCase,
+    private val updateFavoritesUseCase: UpdateFavoritesUseCase
 ) : ViewModel() {
 
     private var _state: MutableLiveData<MovieDetailUiState> = MutableLiveData(MovieDetailUiState())
@@ -41,8 +43,8 @@ class MovieDetailViewModel @Inject constructor(
             .subscribe(getMovieObserver())
     }
 
-    private fun getMovieObserver() : Observer<OperationResult<Any>> {
-        return object : Observer<OperationResult<Any>>{
+    private fun getMovieObserver(): Observer<OperationResult<Any>> {
+        return object : Observer<OperationResult<Any>> {
             override fun onSubscribe(d: Disposable) {
                 disposable = d
                 toggleLoadingState(true)
@@ -58,10 +60,11 @@ class MovieDetailViewModel @Inject constructor(
             }
 
             override fun onNext(item: OperationResult<Any>) {
-                when(item) {
+                when (item) {
                     is OperationResult.Success -> {
                         handleSuccessResult(item.data)
                     }
+
                     is OperationResult.Error -> {
                         handleErrorResult(item.errorMessage)
                     }
@@ -77,8 +80,7 @@ class MovieDetailViewModel @Inject constructor(
                 isGetMovieDetailSuccessful = true
             )
             toggleLoadingState(!(_state.value?.isGetMovieDetailSuccessful == true && _state.value?.isGetMovieCastSuccessful == true))
-        }
-        else if (item is CreditsEntity) {
+        } else if (item is CreditsEntity) {
             _state.value = _state.value?.copy(
                 credits = item.toCredits(),
                 isGetMovieCastSuccessful = true
@@ -89,6 +91,18 @@ class MovieDetailViewModel @Inject constructor(
 
     private fun handleErrorResult(errorMessage: String) {
         postError(errorMessage)
+    }
+
+    fun toggleIsFavorite() {
+        val isFavorite = _state.value!!.movieDetail.isFavorite
+
+        _state.value = _state.value?.copy(
+            movieDetail = _state.value!!.movieDetail.copy(isFavorite = !isFavorite)
+        )
+        updateFavoritesUseCase.updateIsFavorite(
+            movieId = _state.value!!.movieDetail.id,
+            isFavorite = !isFavorite
+        )
     }
 
     private fun toggleLoadingState(isLoading: Boolean) {
