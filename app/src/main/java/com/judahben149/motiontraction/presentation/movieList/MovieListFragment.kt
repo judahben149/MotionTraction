@@ -50,8 +50,10 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        setListeners()
         collectMoviePagedList()
     }
+
 
     private fun initViews() {
         recyclerView = binding.rvDiscoverMovies
@@ -61,6 +63,13 @@ class MovieListFragment : Fragment() {
 
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = adapter
+    }
+
+    private fun setListeners() {
+        binding.swipeRefresh.setOnRefreshListener {
+            adapter.refresh()
+            binding.swipeRefresh.isRefreshing = false
+        }
     }
 
     private fun collectMoviePagedList() {
