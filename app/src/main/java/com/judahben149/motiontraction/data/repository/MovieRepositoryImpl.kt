@@ -9,14 +9,13 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.judahben149.motiontraction.data.source.local.MovieDatabase
 import com.judahben149.motiontraction.data.source.local.entity.credits.CreditsEntity
+import com.judahben149.motiontraction.data.source.local.entity.favoriteMovies.FavoriteMovieEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
 import com.judahben149.motiontraction.data.source.paging.PopularMoviesRXRemoteMediator
 import com.judahben149.motiontraction.data.source.remote.MovieService
-import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.MovieDetailDto
 import com.judahben149.motiontraction.domain.mappers.toCreditsEntity
 import com.judahben149.motiontraction.domain.mappers.toMovieDetailEntity
-import com.judahben149.motiontraction.domain.mappers.toMovieDetailEntityUpdate
 import com.judahben149.motiontraction.domain.repository.MovieRepository
 import com.judahben149.motiontraction.utils.Constants.INITIAL_LOAD_SIZE
 import com.judahben149.motiontraction.utils.Constants.MAX_LOAD_SIZE
@@ -28,6 +27,7 @@ import com.judahben149.motiontraction.utils.OperationResult
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import java.io.IOException
@@ -41,6 +41,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getMovieList(): Flowable<PagingData<MovieResponseEntity.MovieEntity>> {
+
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,
@@ -56,6 +57,18 @@ class MovieRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = { database.movieDao.getAllMovies() }
         ).flowable
+    }
+
+    @SuppressLint("CheckResult")
+    override fun saveFavoriteMovie(favoriteMovieEntity: FavoriteMovieEntity) {
+        Single.fromCallable { database.favoriteMovieDao.saveFavoriteMovie(favoriteMovieEntity) }
+            .subscribeOn(Schedulers.io()).subscribe()
+    }
+
+
+    override fun getFavoriteMovieList(): Observable<List<FavoriteMovieEntity>> {
+        return database.favoriteMovieDao.getAllFavoriteMovies().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
 
@@ -130,31 +143,7 @@ class MovieRepositoryImpl @Inject constructor(
         }
 
         return database.creditsDao.getCredit(id)
-            .flatMap {  Observable.just<OperationResult<CreditsEntity>>(OperationResult.Success(it)) }
+            .flatMap { Observable.just<OperationResult<CreditsEntity>>(OperationResult.Success(it)) }
             .onErrorReturn { OperationResult.Error(it.message.toString()) }
-    }
-
-    @SuppressLint("CheckResult")
-    fun updateMovieIfExists(movieResponse: MovieDetailDto) {
-        val detailEntity = movieResponse.toMovieDetailEntity()
-
-        database.movieDao.peekMovie(detailEntity.movieId.toLong())
-            .flatMap { movieDetailEntity ->
-                if (movieDetailEntity != null) {
-                    database.movieDao.updateMovieDetail(movieResponse.toMovieDetailEntityUpdate())
-                    Single.just(OperationResult.Success(movieDetailEntity))
-                } else {
-                    database.movieDao.saveMovie(detailEntity)
-                    Single.just(OperationResult.Success(movieDetailEntity))
-                }
-            }
-            .subscribeOn(Schedulers.io())
-    }
-
-
-    @SuppressLint("CheckResult")
-    fun updateIsFavorite(movieId: Int, isFavorite: Boolean) {
-        database.movieDao.updateFavoriteMovieListItem(movieId.toLong(), isFavorite).subscribeOn(Schedulers.io()).subscribe()
-        database.movieDao.updateFavoriteMovieDetailItem(movieId, isFavorite).subscribeOn(Schedulers.io()).subscribe()
     }
 }
