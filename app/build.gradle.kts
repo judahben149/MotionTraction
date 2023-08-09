@@ -58,6 +58,8 @@ dependencies {
     val epoxyVersion = "5.0.0"
     val rxJavaVersion = "2.2.13"
     val rxAndroidVersion = "2.1.1"
+    val swipeRefreshVersion = "1.2.0-alpha01"
+    val shimmerVersion = "0.5.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -65,6 +67,12 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
+
+    //Swipe to Refresh
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshVersion")
+
+    // Shimmer layout
+    implementation("com.facebook.shimmer:shimmer:$shimmerVersion")
 
     // Timber
     implementation("com.jakewharton.timber:timber:$timberVersion")
