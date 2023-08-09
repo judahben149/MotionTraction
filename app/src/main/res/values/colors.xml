@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple_hue">#F1EAFF</color>
+    <color name="shimmer_placeholder_color">#dddddd</color>
+    <color name="shimmer_placeholder_color_darker">#D1D1D1</color>
 </resources>
