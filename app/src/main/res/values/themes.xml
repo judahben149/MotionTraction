@@ -8,4 +8,8 @@
     </style>
 
     <style name="Theme.MotionTraction" parent="Base.Theme.MotionTraction" />
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize20Percent" parent="">
+        <item name="cornerSize">26%</item>
+    </style>
 </resources>
