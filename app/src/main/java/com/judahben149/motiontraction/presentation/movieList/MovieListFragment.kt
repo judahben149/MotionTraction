@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.filter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.judahben149.motiontraction.R
@@ -26,7 +27,6 @@ class MovieListFragment : Fragment() {
     private lateinit var layoutManager: LinearLayoutManager
 
     private val viewModel: MovieListViewModel by viewModels()
-
     private val mDisposable by lazy { CompositeDisposable() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +43,7 @@ class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        setupOptionsMenu()
         return binding.root
     }
 
@@ -64,10 +65,34 @@ class MovieListFragment : Fragment() {
 
     private fun collectMoviePagedList() {
         mDisposable.add(
-            viewModel.getMovieList().subscribe {
-                adapter.submitData(lifecycle, it)
+            viewModel.getMovieList().subscribe { pagingData ->
+                if (viewModel.state.value?.filterType == MovieType.FAVORITES) {
+                    adapter.submitData(lifecycle, pagingData.filter { it.isFavorite })
+                    binding.toolbar.menu.findItem(R.id.action_filter_favorites).title = "Show all"
+                } else {
+                    adapter.submitData(lifecycle, pagingData)
+                    binding.toolbar.menu.findItem(R.id.action_filter_favorites).title = "Filter favorites"
+                }
             }
         )
+    }
+
+    private fun setupOptionsMenu() {
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_filter_favorites -> {
+                    if (viewModel.state.value?.filterType == MovieType.ALL) {
+                        viewModel.updateFilter(MovieType.FAVORITES)
+                    } else {
+                        viewModel.updateFilter(MovieType.ALL)
+                    }
+
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     override fun onDestroy() {
