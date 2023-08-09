@@ -1,4 +1,4 @@
-package com.judahben149.motiontraction.domain.usecase
+package com.judahben149.motiontraction.domain.usecase.credits
 
 import com.judahben149.motiontraction.data.repository.MovieRepositoryImpl
 import com.judahben149.motiontraction.data.source.local.entity.credits.CreditsEntity

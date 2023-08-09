@@ -1,4 +1,4 @@
-package com.judahben149.motiontraction.domain.usecase
+package com.judahben149.motiontraction.domain.usecase.movieList
 
 import androidx.paging.PagingData
 import com.judahben149.motiontraction.data.repository.MovieRepositoryImpl
