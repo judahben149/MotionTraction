@@ -60,6 +60,7 @@ dependencies {
     val rxAndroidVersion = "2.1.1"
     val swipeRefreshVersion = "1.2.0-alpha01"
     val shimmerVersion = "0.5.0"
+    val lottieVersion = "5.2.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -70,6 +71,9 @@ dependencies {
 
     //Swipe to Refresh
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshVersion")
+
+    //Lottie animation library
+    implementation("com.airbnb.android:lottie:$lottieVersion")
 
     // Shimmer layout
     implementation("com.facebook.shimmer:shimmer:$shimmerVersion")
