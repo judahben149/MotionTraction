@@ -1,4 +1,4 @@
-package com.judahben149.motiontraction.presentation.movieDetail.epoxy
+package com.judahben149.motiontraction.presentation.movieDetail.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,7 +12,9 @@ import com.judahben149.motiontraction.domain.models.credits.Cast
 import com.judahben149.motiontraction.utils.loadImage
 import com.judahben149.motiontraction.utils.loadImagePlaceholder
 
-class MovieCastAdapter(private val context: Context): ListAdapter<Cast, MovieCastAdapter.MovieCastViewHolder>(MovieCastDiffer()) {
+class MovieCastAdapter(private val context: Context): ListAdapter<Cast, MovieCastAdapter.MovieCastViewHolder>(
+    MovieCastDiffer()
+) {
 
     inner class MovieCastViewHolder(private val binding: ItemCardCastBinding): RecyclerView.ViewHolder(binding.root) {
         fun bindItem(cast: Cast) {

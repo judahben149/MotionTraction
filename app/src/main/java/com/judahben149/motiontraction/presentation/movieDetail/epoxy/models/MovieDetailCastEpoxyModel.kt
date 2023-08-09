@@ -4,7 +4,7 @@ import android.content.Context
 import com.judahben149.motiontraction.R
 import com.judahben149.motiontraction.databinding.EpoxyModelDetailCastSectionBinding
 import com.judahben149.motiontraction.domain.models.credits.Credits
-import com.judahben149.motiontraction.presentation.movieDetail.epoxy.MovieCastAdapter
+import com.judahben149.motiontraction.presentation.movieDetail.adapter.MovieCastAdapter
 import com.judahben149.motiontraction.presentation.shared.epoxy.ViewBindingKotlinModel
 
 data class MovieDetailCastEpoxyModel(
