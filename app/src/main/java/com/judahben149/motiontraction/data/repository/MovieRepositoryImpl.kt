@@ -1,21 +1,22 @@
 package com.judahben149.motiontraction.data.repository
 
-import android.content.Context
+import android.annotation.SuppressLint
 import androidx.annotation.WorkerThread
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
-import com.judahben149.motiontraction.utils.OperationResult
 import com.judahben149.motiontraction.data.source.local.MovieDatabase
 import com.judahben149.motiontraction.data.source.local.entity.credits.CreditsEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
 import com.judahben149.motiontraction.data.source.paging.PopularMoviesRXRemoteMediator
 import com.judahben149.motiontraction.data.source.remote.MovieService
+import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.MovieDetailDto
 import com.judahben149.motiontraction.domain.mappers.toCreditsEntity
 import com.judahben149.motiontraction.domain.mappers.toMovieDetailEntity
+import com.judahben149.motiontraction.domain.mappers.toMovieDetailEntityUpdate
 import com.judahben149.motiontraction.domain.repository.MovieRepository
 import com.judahben149.motiontraction.utils.Constants.INITIAL_LOAD_SIZE
 import com.judahben149.motiontraction.utils.Constants.MAX_LOAD_SIZE
@@ -23,8 +24,10 @@ import com.judahben149.motiontraction.utils.Constants.NETWORK_PAGE_SIZE
 import com.judahben149.motiontraction.utils.Constants.PRE_FETCH_DISTANCE
 import com.judahben149.motiontraction.utils.Constants.STARTING_PAGE_INDEX
 import com.judahben149.motiontraction.utils.NetworkUtils
+import com.judahben149.motiontraction.utils.OperationResult
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import java.io.IOException
@@ -35,9 +38,6 @@ class MovieRepositoryImpl @Inject constructor(
     private val database: MovieDatabase,
     private val networkUtils: NetworkUtils
 ) : MovieRepository {
-
-    @Inject
-    lateinit var appContext: Context
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getMovieList(): Flowable<PagingData<MovieResponseEntity.MovieEntity>> {
@@ -130,7 +130,31 @@ class MovieRepositoryImpl @Inject constructor(
         }
 
         return database.creditsDao.getCredit(id)
-            .flatMap { Observable.just<OperationResult<CreditsEntity>>(OperationResult.Success(it)) }
+            .flatMap {  Observable.just<OperationResult<CreditsEntity>>(OperationResult.Success(it)) }
             .onErrorReturn { OperationResult.Error(it.message.toString()) }
+    }
+
+    @SuppressLint("CheckResult")
+    fun updateMovieIfExists(movieResponse: MovieDetailDto) {
+        val detailEntity = movieResponse.toMovieDetailEntity()
+
+        database.movieDao.peekMovie(detailEntity.movieId.toLong())
+            .flatMap { movieDetailEntity ->
+                if (movieDetailEntity != null) {
+                    database.movieDao.updateMovieDetail(movieResponse.toMovieDetailEntityUpdate())
+                    Single.just(OperationResult.Success(movieDetailEntity))
+                } else {
+                    database.movieDao.saveMovie(detailEntity)
+                    Single.just(OperationResult.Success(movieDetailEntity))
+                }
+            }
+            .subscribeOn(Schedulers.io())
+    }
+
+
+    @SuppressLint("CheckResult")
+    fun updateIsFavorite(movieId: Int, isFavorite: Boolean) {
+        database.movieDao.updateFavoriteMovieListItem(movieId.toLong(), isFavorite).subscribeOn(Schedulers.io()).subscribe()
+        database.movieDao.updateFavoriteMovieDetailItem(movieId, isFavorite).subscribeOn(Schedulers.io()).subscribe()
     }
 }
