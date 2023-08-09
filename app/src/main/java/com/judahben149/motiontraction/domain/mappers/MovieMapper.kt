@@ -2,6 +2,7 @@ package com.judahben149.motiontraction.domain.mappers
 
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.GenreEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
+import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntityUpdate
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.ProductionCompanyEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.ProductionCountryEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.SpokenLanguageEntity
@@ -52,13 +53,14 @@ fun PopularMoviesListDto.PopularMoviesListData.toMovieResponseDataEntity(): Movi
         title = this.title,
         video = this.video,
         voteAverage = this.voteAverage,
-        voteCount = this.voteCount
+        voteCount = this.voteCount,
+        isFavorite = false
     )
 }
 
 fun MovieDetailEntity.toDetailMovie(): DetailMovie {
     return DetailMovie(
-        id = this.id,
+        id = this.movieId,
         adult = this.adult,
         backdropPath = this.backdropPath,
         budget = this.budget,
@@ -81,13 +83,44 @@ fun MovieDetailEntity.toDetailMovie(): DetailMovie {
         title = this.title,
         video = this.video,
         voteAverage = this.voteAverage,
-        voteCount = this.voteCount
+        voteCount = this.voteCount,
+        isFavorite = this.isFavorite
     )
 }
 
 fun MovieDetailDto.toMovieDetailEntity(): MovieDetailEntity {
     return MovieDetailEntity(
-        id = this.id,
+        movieId = this.id,
+        adult = this.adult,
+        backdropPath = this.backdropPath ?: "",
+        budget = this.budget.toDouble(),
+        genres = this.genres.map { it.toGenreEntity() },
+        homepageUrl = this.homepage ?: "",
+        imdbId = this.imdbId ?: "",
+        originalLanguage = this.originalLanguage,
+        originalTitle = this.originalTitle,
+        overview = this.overview ?: "",
+        popularity = this.popularity,
+        posterPath = this.posterPath ?: "",
+        productionCompanies = this.productionCompanies?.map { it.toProductionCompanyEntity() } ?: emptyList(),
+        productionCountries = this.productionCountries?.map { it.toProductionCountryEntity() } ?: emptyList(),
+        releaseDate = this.releaseDate,
+        revenue = this.revenue.toDouble(),
+        runtime = this.runtime ?: 0,
+        spokenLanguages = this.spokenLanguages?.map { it.toSpokenLanguageEntity() } ?: emptyList(),
+        status = this.status,
+        tagline = this.tagline ?: "",
+        title = this.title,
+        video = this.video,
+        voteAverage = this.voteAverage,
+        voteCount = this.voteCount,
+        isFavorite = false
+    )
+}
+
+fun MovieDetailDto.toMovieDetailEntityUpdate(): MovieDetailEntityUpdate {
+    return MovieDetailEntityUpdate(
+        movieId = this.id,
         adult = this.adult,
         backdropPath = this.backdropPath ?: "",
         budget = this.budget.toDouble(),

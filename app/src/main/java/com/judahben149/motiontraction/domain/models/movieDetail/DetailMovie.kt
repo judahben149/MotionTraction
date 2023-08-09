@@ -25,7 +25,8 @@ data class DetailMovie(
     val title: String = "",
     val video: Boolean = false,
     val voteAverage: Double = 0.0,
-    val voteCount: Int = 0
+    val voteCount: Int = 0,
+    val isFavorite: Boolean = false
 )
 
 data class ProductionCompany(
