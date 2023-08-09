@@ -97,6 +97,7 @@ class MovieListFragment : Fragment() {
             }
 
             state.favoriteMovieList?.let {
+                toggleShimmer(false)
                 favMoviesAdapter.submitList(it)
             }
 
