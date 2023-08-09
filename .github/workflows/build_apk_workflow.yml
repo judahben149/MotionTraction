@@ -1,0 +1,37 @@
+name: MotionTraction Build Release Workflow
+
+on:
+  push:
+    branches:
+      [ master ]
+
+jobs:
+  apk:
+    permissions:
+      contents: write
+    name: Generate and release APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: Access TMDB_API_KEY
+        env:
+          TMDB_API_KEY: $
+        run: echo TMDB_API_KEY=\"TMDB_API_KEY\" > ./local.properties
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+          cache: gradle
+
+      - name: Set execution flag for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Build APK
+        run: ./gradlew assembleDebug
