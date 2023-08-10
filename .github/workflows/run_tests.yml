@@ -1,4 +1,4 @@
-name: Confirm APK build
+name: Run Unit Tests
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
   apk:
     permissions:
       contents: write
-    name: Confirm APK build
+    name: Run Unit Tests
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -30,8 +30,5 @@ jobs:
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
 
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Build APK
-        run: ./gradlew assembleDebug
+      - name: Run unit testing
+        run: ./gradlew test
