@@ -5,4 +5,7 @@
     <color name="purple_hue">#F1EAFF</color>
     <color name="shimmer_placeholder_color">#dddddd</color>
     <color name="shimmer_placeholder_color_darker">#D1D1D1</color>
+    <color name="fav_button_color">#FAE9EF</color>
+    <color name="back_btn_color">#E91E63</color>
+    <color name="back_btn_background_color">#FAE9EF</color>
 </resources>
