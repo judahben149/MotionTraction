@@ -10,6 +10,7 @@ import com.judahben149.motiontraction.data.source.local.entity.movieDetail.Produ
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.ProductionCountryEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.SpokenLanguageEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieEntity
+import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieEntityRemoteKey
 import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
 import kotlin.random.Random
 
@@ -217,5 +218,13 @@ fun generateRandomMovieResponseEntity(page: Int, totalPages: Int): MovieResponse
         movieList.add(generateRandomMovieEntity())
     }
     return MovieResponseEntity(page, movieList, totalPages)
+}
+
+fun generateRandomMovieEntityRemoteKey(): MovieEntityRemoteKey {
+    return MovieEntityRemoteKey(
+        id = Random.nextLong(),
+        prev = Random.nextInt(),
+        next = Random.nextInt()
+    )
 }
 
