@@ -16,6 +16,10 @@ Motion is a movie recommendation app
 | Clean Architectural Pattern ✅ | |
 | Users can filter by Favorites ✅ | |
 
+# Test App
+https://appetize.io/embed/a6dpgv3qxdwjhrbjheu4cgs3fe
+https://appetize.io/app/a6dpgv3qxdwjhrbjheu4cgs3fe?device=pixel7pro&osVersion=13.0&scale=75
+
 # Make a Local build 🛠️
 1. Clone the repository ```https://github.com/judahben149/MotionTraction.git```
 2. Open in Android Studio
