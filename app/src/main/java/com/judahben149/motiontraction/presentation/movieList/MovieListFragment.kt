@@ -13,6 +13,9 @@ import com.judahben149.motiontraction.R
 import com.judahben149.motiontraction.databinding.FragmentMovieListBinding
 import com.judahben149.motiontraction.presentation.movieList.adapter.FavoriteMoviesAdapter
 import com.judahben149.motiontraction.presentation.movieList.adapter.MovieListAdapter
+import com.judahben149.motiontraction.utils.hide
+import com.judahben149.motiontraction.utils.show
+import com.judahben149.motiontraction.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
 
@@ -28,7 +31,7 @@ class MovieListFragment : Fragment() {
     private lateinit var layoutManager: LinearLayoutManager
 
     private val viewModel: MovieListViewModel by viewModels()
-    private val mDisposable by lazy { CompositeDisposable() }
+    private val compDisposable by lazy { CompositeDisposable() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,24 +93,33 @@ class MovieListFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
 
             if (state.movieList != null) {
-                mDisposable.add(
+                compDisposable.add(
                     state.movieList.subscribe { pagingData ->
                         movieListAdapter.submitData(lifecycle, pagingData)
                     }
                 )
             }
 
-            state.favoriteMovieList?.let {
+            state.favoriteMovieList?.let { favMoviesList ->
                 toggleShimmer(false)
-                favMoviesAdapter.submitList(it)
+                favMoviesAdapter.submitList(favMoviesList)
+
+                if (favMoviesList.isEmpty() && viewModel.state.value?.movieFilter == MovieFilter.FAVORITES)
+                    binding.tvEmptyFavMovies.show()
+                else
+                    binding.tvEmptyFavMovies.hide()
             }
 
-            when (state.filterType) {
-                MovieType.FAVORITES -> {
+            when (state.movieFilter) {
+                MovieFilter.FAVORITES -> {
                     viewModel.getFavoriteMovies()
                     toggleAdapterVisibility(true)
                 }
-                MovieType.ALL -> toggleAdapterVisibility(false)
+                MovieFilter.ALL -> toggleAdapterVisibility(false)
+            }
+
+            if (state.isError) {
+                handleError(state.errorMessage)
             }
         }
     }
@@ -116,13 +128,13 @@ class MovieListFragment : Fragment() {
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_show_favorites -> {
-                    viewModel.updateFilter(MovieType.FAVORITES)
+                    viewModel.updateFilter(MovieFilter.FAVORITES)
                     binding.toolbar.menu.findItem(R.id.action_show_favorites).isVisible = false
                     binding.toolbar.menu.findItem(R.id.action_show_all).isVisible = true
                     true
                 }
                 R.id.action_show_all -> {
-                    viewModel.updateFilter(MovieType.ALL)
+                    viewModel.updateFilter(MovieFilter.ALL)
                     binding.toolbar.menu.findItem(R.id.action_show_all).isVisible = false
                     binding.toolbar.menu.findItem(R.id.action_show_favorites).isVisible = true
                     true
@@ -135,7 +147,7 @@ class MovieListFragment : Fragment() {
 
     private fun updateOptionMenu() {
         viewModel.state.observe(viewLifecycleOwner) {
-            if (it.filterType == MovieType.FAVORITES) {
+            if (it.movieFilter == MovieFilter.FAVORITES) {
                 binding.toolbar.menu.findItem(R.id.action_show_favorites).isVisible = false
                 binding.toolbar.menu.findItem(R.id.action_show_all).isVisible = true
                 binding.tvToolbarTitle.text = getString(R.string.favorites)
@@ -166,6 +178,11 @@ class MovieListFragment : Fragment() {
         }
     }
 
+    private fun handleError(errorMessage: String) {
+        errorMessage.showSnackBar(binding.root)
+        viewModel.notifyErrorHandled()
+    }
+
     override fun onPause() {
         super.onPause()
         toggleShimmer(false)
@@ -173,7 +190,7 @@ class MovieListFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mDisposable.dispose()
+        compDisposable.dispose()
         _binding = null
     }
 }

@@ -8,10 +8,12 @@ import io.reactivex.Flowable
 data class MovieListUIState(
     val movieList: Flowable<PagingData<ListMovie>>? = null,
     val favoriteMovieList: List<FavoriteMovie>? = null,
-    val filterType: MovieType = MovieType.ALL
+    val movieFilter: MovieFilter = MovieFilter.ALL,
+    val isError: Boolean = false,
+    val errorMessage: String = ""
 )
 
-enum class MovieType {
+enum class MovieFilter {
     ALL,
     FAVORITES
 }
