@@ -3,7 +3,7 @@ name: MotionTraction Build Release Workflow
 on:
   push:
     branches:
-      [ master ]
+      [ main ]
 
 jobs:
   apk:
