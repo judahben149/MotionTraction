@@ -34,7 +34,6 @@ class MovieDetailViewModel @Inject constructor(
 
 
     fun getMovie(movieId: Int) {
-        clearError()
 
         Observable.merge(
             detailsUseCase.getMovieDetail(movieId).subscribeOn(Schedulers.io()),
@@ -81,7 +80,8 @@ class MovieDetailViewModel @Inject constructor(
                 isGetMovieDetailSuccessful = true
             )
             toggleLoadingState(!(_state.value?.isGetMovieDetailSuccessful == true && _state.value?.isGetMovieCastSuccessful == true))
-        } else if (item is CreditsEntity) {
+        }
+        else if (item is CreditsEntity) {
             _state.value = _state.value?.copy(
                 credits = item.toCredits(),
                 isGetMovieCastSuccessful = true
@@ -121,7 +121,7 @@ class MovieDetailViewModel @Inject constructor(
         _state.postValue(_state.value?.copy(isError = true, errorMessage = errorMessage))
     }
 
-    private fun clearError() {
+    fun notifyErrorHandled() {
         _state.postValue(_state.value?.copy(isError = false))
     }
 

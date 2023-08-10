@@ -44,7 +44,7 @@ class MovieDetailFragment : Fragment() {
         binding.epoxyRvMovieDetail.setController(controller)
 
         setupListeners()
-        observeState()
+        collectState()
         getMovieDetail()
     }
 
@@ -55,15 +55,14 @@ class MovieDetailFragment : Fragment() {
         }
     }
 
-    private fun observeState() {
+    private fun collectState() {
         viewModel.state.observe(viewLifecycleOwner) { state ->
             if (state.isGetMovieDetailSuccessful && state.isGetMovieCastSuccessful) {
-//                toggleShimmer(false)
                 controller.setData(state)
             }
 
             if (state.isError) {
-                state.errorMessage.showSnackBar(binding.root)
+                handleError(state.errorMessage)
             }
         }
     }
@@ -77,6 +76,11 @@ class MovieDetailFragment : Fragment() {
 
     private fun handleLikeAction() {
         viewModel.addToFavorites()
+    }
+
+    private fun handleError(erroMessage: String) {
+        erroMessage.showSnackBar(binding.root)
+        viewModel.notifyErrorHandled()
     }
 
     private fun toggleShimmer(shouldStart: Boolean) {
