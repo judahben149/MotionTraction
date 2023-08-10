@@ -46,7 +46,6 @@ android {
 }
 
 dependencies {
-    testImplementation("junit:junit:4.12")
     val timberVersion = "5.0.1"
     val hiltVersion = "2.46.1"
     val lifecycleVersion = "2.6.1"
@@ -130,14 +129,19 @@ dependencies {
 
     // Mockito
     testImplementation("org.mockito:mockito-core:$mockitoVersion")
+    testImplementation("org.mockito:mockito-inline:3.11.2")
+    testImplementation("org.mockito:mockito-android:$mockitoVersion")
 
     // J-Unit
     testImplementation("junit:junit:$jUnitVersion")
 
     // Truth - Assertion
     testImplementation("com.google.truth:truth:$truthVersion")
+    androidTestImplementation("com.google.truth:truth:$truthVersion")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("android.arch.core:core-testing:1.1.1")
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
