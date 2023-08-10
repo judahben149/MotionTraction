@@ -112,6 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:indeterminate="true"
+        app:indicatorColor="@color/back_btn_color"
         app:layout_constraintBottom_toBottomOf="@id/iv_backdrop_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

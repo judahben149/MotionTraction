@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_overview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,11 +22,27 @@
             android:id="@+id/tv_movie_overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="13sp"
             android:justificationMode="inter_word"
             android:lineSpacingExtra="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_directors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:justificationMode="inter_word"
+            android:textAlignment="textStart"
+            android:layout_marginTop="16dp"
+            tools:text="Director: Joe Russo\nWriters: Evelip Bawson"
+            android:lineSpacingExtra="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_overview" />
+
 
         <LinearLayout
             android:id="@+id/layout_like"
@@ -35,13 +52,14 @@
             android:orientation="horizontal"
             android:background="@drawable/rounded_colored_corner_background"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_movie_overview">
+            app:layout_constraintTop_toBottomOf="@id/tv_directors">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_like"
                 android:layout_width="wrap_content"
                 android:layout_marginStart="10dp"
                 android:textSize="12sp"
+                android:layout_marginEnd="-2dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/add_to_favorites" />
@@ -54,6 +72,38 @@
                 android:layout_gravity="center_vertical"
                 app:lottie_autoPlay="false"
                 app:lottie_rawRes="@raw/anim_like" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:backgroundTint="#1AB6B6B6"
+            android:background="@drawable/rounded_colored_corner_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_directors">
+
+            <ImageView
+                android:id="@+id/iv_rating"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="2dp"
+                android:src="@drawable/ic_star_rating"
+                android:layout_gravity="center_vertical" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_rating"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textSize="12sp"
+                android:layout_marginEnd="3dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                tools:text="@string/add_to_favorites" />
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
