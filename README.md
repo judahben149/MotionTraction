@@ -2,6 +2,7 @@
 Motion Traction is a movie recommendation app built to showcase required skills for the Android Engineer position at Traction Apps.
 ### CI Status
 ![example workflow](https://github.com/judahben149/MotionTraction/actions/workflows/build_apk_workflow.yml/badge.svg)
+
 ![example workflow](https://github.com/judahben149/MotionTraction/actions/workflows/run_tests.yml/badge.svg)
 
 # App Requirements
