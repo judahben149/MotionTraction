@@ -100,7 +100,7 @@ class MovieDatabaseTest {
     }
 
     @Test
-    fun testSaveAndRetrieveRemoteKeys() {
+    fun testSaveAndRetrieveRemoteKeysFromRemoteKeyDao() {
         val remoteKeyEntity1 = generateRandomMovieEntityRemoteKey()
         val remoteKeyEntity2 = generateRandomMovieEntityRemoteKey()
         val remoteKeyEntity3 = generateRandomMovieEntityRemoteKey()
