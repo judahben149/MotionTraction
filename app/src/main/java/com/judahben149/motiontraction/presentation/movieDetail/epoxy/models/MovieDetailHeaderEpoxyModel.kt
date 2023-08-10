@@ -6,7 +6,7 @@ import com.judahben149.motiontraction.R
 import com.judahben149.motiontraction.databinding.EpoxyModelDetailHeaderSectionBinding
 import com.judahben149.motiontraction.domain.models.movieDetail.DetailMovie
 import com.judahben149.motiontraction.presentation.shared.epoxy.ViewBindingKotlinModel
-import com.judahben149.motiontraction.utils.loadImage
+import com.judahben149.motiontraction.utils.loadBackdropImage
 import com.judahben149.motiontraction.utils.parseFriendlyDate
 import com.judahben149.motiontraction.utils.parseGenres
 import com.judahben149.motiontraction.utils.parseRunTime
@@ -28,6 +28,6 @@ data class MovieDetailHeaderEpoxyModel(
             tvMovieRuntime.textSize = 11F
         }
 
-        ivBackdropImage.loadImage(context, movie.backdropPath) { progressBar.visibility = View.INVISIBLE }
+        ivBackdropImage.loadBackdropImage(context, movie.backdropPath) { progressBar.visibility = View.INVISIBLE }
     }
 }
