@@ -41,3 +41,5 @@ Click [here](https://appetize.io/embed/a6dpgv3qxdwjhrbjheu4cgs3fe?device=pixel7p
 * Timber
 * Shimmer Layout
 * Swipe Refresh Layout
+* Mockito
+* Truth Assertion library
