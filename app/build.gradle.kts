@@ -46,6 +46,7 @@ android {
 }
 
 dependencies {
+    testImplementation("junit:junit:4.12")
     val timberVersion = "5.0.1"
     val hiltVersion = "2.46.1"
     val lifecycleVersion = "2.6.1"
@@ -61,6 +62,9 @@ dependencies {
     val swipeRefreshVersion = "1.2.0-alpha01"
     val shimmerVersion = "0.5.0"
     val lottieVersion = "5.2.0"
+    val mockitoVersion = "4.3.0"
+    val jUnitVersion = "4.13.2"
+    val truthVersion = "1.1.2"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -123,6 +127,15 @@ dependencies {
     implementation("com.airbnb.android:epoxy:$epoxyVersion")
     implementation("com.airbnb.android:epoxy-paging:$epoxyVersion")
     implementation("com.airbnb.android:epoxy-paging3:$epoxyVersion")
+
+    // Mockito
+    testImplementation("org.mockito:mockito-core:$mockitoVersion")
+
+    // J-Unit
+    testImplementation("junit:junit:$jUnitVersion")
+
+    // Truth - Assertion
+    testImplementation("com.google.truth:truth:$truthVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
