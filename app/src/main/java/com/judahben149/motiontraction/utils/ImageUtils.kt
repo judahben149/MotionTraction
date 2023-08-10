@@ -48,6 +48,40 @@ fun ImageView.loadImage(
         .into(this)
 }
 
+fun ImageView.loadBackdropImage(
+    context: Context,
+    url: String,
+    onResourceReady:() -> Unit
+) {
+
+    Glide.with(context)
+        .load(BACKDROP_BASE_URL + url)
+        .listener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any?,
+                target: Target<Drawable>?,
+                isFirstResource: Boolean
+            ): Boolean {
+                return false
+            }
+
+            override fun onResourceReady(
+                resource: Drawable?,
+                model: Any?,
+                target: Target<Drawable>?,
+                dataSource: DataSource?,
+                isFirstResource: Boolean
+            ): Boolean {
+                onResourceReady()
+                return false
+            }
+        })
+        .transition(DrawableTransitionOptions.withCrossFade())
+        .into(this)
+}
+
+
 fun ImageView.loadImagePlaceholder(
     context: Context,
     @DrawableRes resource: Int,
