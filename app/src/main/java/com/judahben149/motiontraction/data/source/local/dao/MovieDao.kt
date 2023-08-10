@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntityUpdate
+import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -17,7 +18,7 @@ import io.reactivex.Single
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveAllMovies(movieEntityList: List<MovieResponseEntity.MovieEntity>)
+    fun saveAllMovies(movieEntityList: List<MovieEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveMovie(movieEntity: MovieDetailEntity)
@@ -38,10 +39,10 @@ interface MovieDao {
     fun updateMovieDetail(movieDetailUpdate: MovieDetailEntityUpdate): Single<Int>
 
     @Query("SELECT * FROM movies ORDER BY id ASC")
-    fun getAllMovies(): PagingSource<Int, MovieResponseEntity.MovieEntity>
+    fun getAllMovies(): PagingSource<Int, MovieEntity>
 
     @Query("SELECT * FROM movies WHERE isFavorite = 1")
-    fun getAllFavoriteMovies(): Flowable<List<MovieResponseEntity.MovieEntity>>
+    fun getAllFavoriteMovies(): Flowable<List<MovieEntity>>
 
     @Query("DELETE FROM movies")
     fun deleteAllMovies()

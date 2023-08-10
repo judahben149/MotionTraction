@@ -5,6 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import com.judahben149.motiontraction.data.source.local.MovieDatabase
+import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieEntityRemoteKey
 import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
 import com.judahben149.motiontraction.data.source.remote.MovieService
@@ -19,11 +20,11 @@ class PopularMoviesRXRemoteMediator(
     private val database: MovieDatabase,
     private val moviesService: MovieService,
     private val initialPage: Int = 1
-) : RxRemoteMediator<Int, MovieResponseEntity.MovieEntity>() {
+) : RxRemoteMediator<Int, MovieEntity>() {
 
     override fun loadSingle(
         loadType: LoadType,
-        state: PagingState<Int, MovieResponseEntity.MovieEntity>
+        state: PagingState<Int, MovieEntity>
     ): Single<MediatorResult> {
 
         return Single.just(loadType)
@@ -84,7 +85,7 @@ class PopularMoviesRXRemoteMediator(
         return data
     }
 
-    private fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, MovieResponseEntity.MovieEntity>): MovieEntityRemoteKey? {
+    private fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, MovieEntity>): MovieEntityRemoteKey? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestItemToPosition(anchorPosition)?.movieId?.let { movieId ->
                 database.remoteKeyDao.getRemoteKeysByMovieId(movieId)
@@ -92,13 +93,13 @@ class PopularMoviesRXRemoteMediator(
         }
     }
 
-    private fun getLastRemoteKey(state: PagingState<Int, MovieResponseEntity.MovieEntity>): MovieEntityRemoteKey? {
+    private fun getLastRemoteKey(state: PagingState<Int, MovieEntity>): MovieEntityRemoteKey? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { movie ->
             database.remoteKeyDao.getRemoteKeysByMovieId(movie.movieId)
         }
     }
 
-    private fun getFirstRemoteKey(state: PagingState<Int, MovieResponseEntity.MovieEntity>): MovieEntityRemoteKey? {
+    private fun getFirstRemoteKey(state: PagingState<Int, MovieEntity>): MovieEntityRemoteKey? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { movie ->
             database.remoteKeyDao.getRemoteKeysByMovieId(movie.movieId)
         }

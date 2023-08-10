@@ -67,7 +67,7 @@ class MovieDetailViewModel @Inject constructor(
                     }
 
                     is OperationResult.Error -> {
-                        handleErrorResult(item.errorMessage)
+                        handleErrorResult(item.throwable.localizedMessage ?: "An error occurred")
                     }
                 }
             }

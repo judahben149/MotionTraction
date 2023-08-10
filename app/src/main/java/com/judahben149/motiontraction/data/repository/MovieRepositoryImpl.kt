@@ -11,7 +11,7 @@ import com.judahben149.motiontraction.data.source.local.MovieDatabase
 import com.judahben149.motiontraction.data.source.local.entity.credits.CreditsEntity
 import com.judahben149.motiontraction.data.source.local.entity.favoriteMovies.FavoriteMovieEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
-import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
+import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieEntity
 import com.judahben149.motiontraction.data.source.paging.PopularMoviesRXRemoteMediator
 import com.judahben149.motiontraction.data.source.remote.MovieService
 import com.judahben149.motiontraction.domain.mappers.toCreditsEntity
@@ -40,7 +40,7 @@ class MovieRepositoryImpl @Inject constructor(
 ) : MovieRepository {
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getMovieList(): Flowable<PagingData<MovieResponseEntity.MovieEntity>> {
+    override fun getMovieList(): Flowable<PagingData<MovieEntity>> {
 
         return Pager(
             config = PagingConfig(
@@ -88,18 +88,18 @@ class MovieRepositoryImpl @Inject constructor(
                                 database.movieDao.saveMovie(detailEntity)
                                 Observable.just(OperationResult.Success(detailEntity))
                             } else {
-                                Observable.just(OperationResult.Error("Empty API result"))
+                                Observable.just(OperationResult.Error(Throwable("Empty API result")))
                             }
                         } else {
-                            Observable.just(OperationResult.Error("Error fetching movie details - ${result.message()}"))
+                            Observable.just(OperationResult.Error(Throwable("Error fetching movie details - ${result.message()}")))
                         }
                     }
             } catch (e: HttpException) {
-                Observable.just(OperationResult.Error("API Error - ${e.message.toString()}"))
+                Observable.just(OperationResult.Error(Throwable("API Error - ${e.message.toString()}")))
             } catch (e: IOException) {
-                Observable.just(OperationResult.Error("Could not establish connection - ${e.message.toString()}"))
+                Observable.just(OperationResult.Error(Throwable("Could not establish connection - ${e.message.toString()}")))
             } catch (e: Exception) {
-                Observable.just(OperationResult.Error("General exception - ${e.message.toString()}"))
+                Observable.just(OperationResult.Error(Throwable("General exception - ${e.message.toString()}")))
             }
         }
 
@@ -107,7 +107,7 @@ class MovieRepositoryImpl @Inject constructor(
             .flatMap {
                 Observable.just<OperationResult<MovieDetailEntity>>(OperationResult.Success(it))
             }
-            .onErrorReturn { OperationResult.Error(it.message.toString()) }
+            .onErrorReturn { OperationResult.Error(Throwable(it.message.toString())) }
     }
 
 
@@ -127,23 +127,23 @@ class MovieRepositoryImpl @Inject constructor(
                                 database.creditsDao.saveCredit(creditsEntity)
                                 Observable.just(OperationResult.Success(creditsEntity))
                             } else {
-                                Observable.just(OperationResult.Error("Empty API result"))
+                                Observable.just(OperationResult.Error(Throwable("Empty API result")))
                             }
                         } else {
-                            Observable.just(OperationResult.Error("Error fetching movie credits - ${result.message()}"))
+                            Observable.just(OperationResult.Error(Throwable("Error fetching movie credits - ${result.message()}")))
                         }
                     }
             } catch (e: HttpException) {
-                Observable.just(OperationResult.Error("API Error - ${e.message.toString()}"))
+                Observable.just(OperationResult.Error(Throwable("API Error - ${e.message.toString()}")))
             } catch (e: IOException) {
-                Observable.just(OperationResult.Error("Could not establish connection - ${e.message.toString()}"))
+                Observable.just(OperationResult.Error(Throwable("Could not establish connection - ${e.message.toString()}")))
             } catch (e: Exception) {
-                Observable.just(OperationResult.Error("General exception - ${e.message.toString()}"))
+                Observable.just(OperationResult.Error(Throwable("General exception - ${e.message.toString()}")))
             }
         }
 
         return database.creditsDao.getCredit(id)
             .flatMap { Observable.just<OperationResult<CreditsEntity>>(OperationResult.Success(it)) }
-            .onErrorReturn { OperationResult.Error(it.message.toString()) }
+            .onErrorReturn { OperationResult.Error(Throwable(it.message.toString())) }
     }
 }

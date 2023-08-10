@@ -4,14 +4,14 @@ import androidx.paging.PagingData
 import com.judahben149.motiontraction.data.source.local.entity.credits.CreditsEntity
 import com.judahben149.motiontraction.data.source.local.entity.favoriteMovies.FavoriteMovieEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
-import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
+import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieEntity
 import com.judahben149.motiontraction.utils.OperationResult
 import io.reactivex.Flowable
 import io.reactivex.Observable
 
 interface MovieRepository {
 
-    fun getMovieList(): Flowable<PagingData<MovieResponseEntity.MovieEntity>>
+    fun getMovieList(): Flowable<PagingData<MovieEntity>>
 
     fun saveFavoriteMovie(favoriteMovieEntity: FavoriteMovieEntity)
 

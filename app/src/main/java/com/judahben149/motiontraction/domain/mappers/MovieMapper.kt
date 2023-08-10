@@ -6,6 +6,7 @@ import com.judahben149.motiontraction.data.source.local.entity.movieDetail.Movie
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.ProductionCompanyEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.ProductionCountryEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.SpokenLanguageEntity
+import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieEntity
 import com.judahben149.motiontraction.data.source.local.entity.movieList.MovieResponseEntity
 import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.GenreDto
 import com.judahben149.motiontraction.data.source.remote.dto.movieDetail.MovieDetailDto
@@ -21,7 +22,7 @@ import com.judahben149.motiontraction.domain.models.movieDetail.SpokenLanguage
 import com.judahben149.motiontraction.domain.models.movieList.ListMovie
 
 
-fun MovieResponseEntity.MovieEntity.toListMovie(): ListMovie {
+fun MovieEntity.toListMovie(): ListMovie {
     return ListMovie(
         id = this.movieId,
         backdropPath = this.backdropPath,
@@ -40,8 +41,8 @@ fun PopularMoviesListDto.toMovieResponseEntity(): MovieResponseEntity {
     )
 }
 
-fun PopularMoviesListDto.PopularMoviesListData.toMovieResponseDataEntity(): MovieResponseEntity.MovieEntity {
-    return MovieResponseEntity.MovieEntity(
+fun PopularMoviesListDto.PopularMoviesListData.toMovieResponseDataEntity(): MovieEntity {
+    return MovieEntity(
         movieId = this.id,
         adult = this.adult,
         backdropPath = this.backdropPath ?: "",
