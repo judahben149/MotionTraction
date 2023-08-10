@@ -13,13 +13,12 @@ Motion Traction is a movie recommendation app built to showcase required skills 
 | Users can filter by Favorites ✅ | |
 
 # Make a Local build 🛠️
-1. Clone the repository
+1. Clone the repository ```https://github.com/judahben149/MotionTraction.git```
 2. Open in Android Studio
-3. Configure prerequisites if any errors
-4. Sync the project
-5. Add in TMDB API key into your local.properties file
-6. Here's a test one you can use TMDB_API_KEY="0ca7e67bfaa50afa304af4a9bb6dbc93"
-7. The Project should build and run successfully
+3. Sync the project
+4. Add in TMDB API key into your local.properties file
+5. Here's a test one you can use ```TMDB_API_KEY="0ca7e67bfaa50afa304af4a9bb6dbc93"```
+6. The Project should build and run successfully
 
 # External Libraries used
 * Lifecycle (for ViewModel and LiveData)
