@@ -1,4 +1,4 @@
-# MotionTraction
+# Motion
 Motion is a movie recommendation applet built to demonstrate knowledge of the required skills for the Android Engineer Position at Traction Apps.
 ### CI Status
 ![Confirm APK build workflow](https://github.com/judahben149/MotionTraction/actions/workflows/build_apk_workflow.yml/badge.svg)
