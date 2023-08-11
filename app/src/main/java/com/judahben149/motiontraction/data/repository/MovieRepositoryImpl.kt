@@ -1,6 +1,5 @@
 package com.judahben149.motiontraction.data.repository
 
-import android.annotation.SuppressLint
 import androidx.annotation.WorkerThread
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -17,6 +16,7 @@ import com.judahben149.motiontraction.data.source.remote.MovieService
 import com.judahben149.motiontraction.domain.mappers.toCreditsEntity
 import com.judahben149.motiontraction.domain.mappers.toMovieDetailEntity
 import com.judahben149.motiontraction.domain.repository.MovieRepository
+import com.judahben149.motiontraction.domain.scheduler.SchedulerProvider
 import com.judahben149.motiontraction.utils.Constants.INITIAL_LOAD_SIZE
 import com.judahben149.motiontraction.utils.Constants.MAX_LOAD_SIZE
 import com.judahben149.motiontraction.utils.Constants.NETWORK_PAGE_SIZE
@@ -27,8 +27,6 @@ import com.judahben149.motiontraction.utils.OperationResult
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -36,7 +34,8 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val moviesService: MovieService,
     private val database: MovieDatabase,
-    private val networkUtils: NetworkUtils
+    private val networkUtils: NetworkUtils,
+    private val schedulerProvider: SchedulerProvider
 ) : MovieRepository {
 
     @OptIn(ExperimentalPagingApi::class)
@@ -59,16 +58,16 @@ class MovieRepositoryImpl @Inject constructor(
         ).flowable
     }
 
-    @SuppressLint("CheckResult")
     override fun saveFavoriteMovie(favoriteMovieEntity: FavoriteMovieEntity) {
-        Single.fromCallable { database.favoriteMovieDao.saveFavoriteMovie(favoriteMovieEntity) }
-            .subscribeOn(Schedulers.io()).subscribe()
+            Single.fromCallable { database.favoriteMovieDao.saveFavoriteMovie(favoriteMovieEntity) }
+            .subscribeOn(schedulerProvider.io()).subscribe()
     }
 
 
     override fun getFavoriteMovieList(): Observable<List<FavoriteMovieEntity>> {
-        return database.favoriteMovieDao.getAllFavoriteMovies().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        return database.favoriteMovieDao.getAllFavoriteMovies()
+            .subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.io())
     }
 
 
@@ -78,8 +77,8 @@ class MovieRepositoryImpl @Inject constructor(
         if (networkUtils.isNetworkAvailable()) {
             return try {
                 moviesService.fetchMovieDetail(id)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.io())
                     .flatMap { result ->
                         if (result.isSuccessful) {
                             val detailEntity = result.body()?.toMovieDetailEntity()
@@ -91,7 +90,7 @@ class MovieRepositoryImpl @Inject constructor(
                                 Observable.just(OperationResult.Error(Throwable("Empty API result")))
                             }
                         } else {
-                            Observable.just(OperationResult.Error(Throwable("Error fetching movie details - ${result.message()}")))
+                            Observable.just(OperationResult.Error(Throwable("Error fetching movie detail - ${result.message()}")))
                         }
                     }
             } catch (e: HttpException) {
@@ -117,8 +116,8 @@ class MovieRepositoryImpl @Inject constructor(
         if (networkUtils.isNetworkAvailable()) {
             return try {
                 moviesService.fetchMovieCredits(id)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.io())
                     .flatMap { result ->
                         if (result.isSuccessful) {
                             val creditsEntity = result.body()?.toCreditsEntity()

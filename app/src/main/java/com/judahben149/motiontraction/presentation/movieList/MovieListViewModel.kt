@@ -9,6 +9,7 @@ import androidx.paging.map
 import androidx.paging.rxjava2.cachedIn
 import com.judahben149.motiontraction.domain.mappers.toFavoriteMovie
 import com.judahben149.motiontraction.domain.mappers.toListMovie
+import com.judahben149.motiontraction.domain.scheduler.SchedulerProvider
 import com.judahben149.motiontraction.domain.usecase.favoriteMovies.GetFavoriteMoviesUseCase
 import com.judahben149.motiontraction.domain.usecase.movieList.GetMoviePagedListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
     private val movieListUseCase: GetMoviePagedListUseCase,
-    private val favoriteMoviesUseCase: GetFavoriteMoviesUseCase
+    private val favoriteMoviesUseCase: GetFavoriteMoviesUseCase,
+    private val schedulerProvider: SchedulerProvider
 ) : ViewModel() {
 
     private val _state: MutableLiveData<MovieListUIState> = MutableLiveData(MovieListUIState())
@@ -46,8 +48,8 @@ class MovieListViewModel @Inject constructor(
         compDisposable.add(
             favoriteMoviesUseCase.getFavoriteMovies()
                 .map { it.map { entity -> entity.toFavoriteMovie() } }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .subscribe(
                     {
                         _state.value = _state.value?.copy(favoriteMovieList = it)
