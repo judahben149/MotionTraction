@@ -1,6 +1,8 @@
 package com.judahben149.motiontraction.di.module
 
 import android.content.Context
+import com.judahben149.motiontraction.domain.scheduler.SchedulerProvider
+import com.judahben149.motiontraction.domain.scheduler.SchedulerProviderImpl
 import com.judahben149.motiontraction.utils.NetworkUtils
 import dagger.Module
 import dagger.Provides
@@ -23,5 +25,11 @@ object AppModule {
     @Singleton
     fun providesNetworkUtils(context: Context): NetworkUtils {
         return NetworkUtils(context)
+    }
+
+    @Provides
+    @Singleton
+    fun providesSchedulerProvider(): SchedulerProvider {
+        return SchedulerProviderImpl()
     }
 }
