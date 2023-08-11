@@ -62,11 +62,10 @@ You can click [here](https://appetize.io/embed/a6dpgv3qxdwjhrbjheu4cgs3fe?device
 
 
 
-![Fav movies screen (Filled)]()
 
 
 
-![Favorites Screen (Dark Mode)]()
+https://github.com/judahben149/MotionTraction/assets/71103838/040fa6e8-02e9-49b0-be3d-bb4091c1dcf4
 
 
 
