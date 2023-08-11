@@ -46,6 +46,7 @@ android {
 }
 
 dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     val timberVersion = "5.0.1"
     val hiltVersion = "2.46.1"
     val lifecycleVersion = "2.6.1"
@@ -135,17 +136,24 @@ dependencies {
     testImplementation("org.mockito:mockito-core:$mockitoVersion")
     testImplementation("org.mockito:mockito-inline:3.11.2")
     testImplementation("org.mockito:mockito-android:$mockitoVersion")
+    androidTestImplementation("org.mockito:mockito-core:$mockitoVersion")
+    androidTestImplementation("org.mockito:mockito-inline:3.11.2")
+    androidTestImplementation("org.mockito:mockito-android:$mockitoVersion")
 
     // J-Unit
     testImplementation("junit:junit:$jUnitVersion")
+    implementation("androidx.test.ext:junit-ktx:1.1.5")
 
     // Truth - Assertion
     testImplementation("com.google.truth:truth:$truthVersion")
     androidTestImplementation("com.google.truth:truth:$truthVersion")
 
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("android.arch.core:core-testing:1.1.1")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
 
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("android.arch.core:core-testing:1.1.1")
+
+    testImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
