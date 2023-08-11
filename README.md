@@ -17,7 +17,7 @@ Motion is a movie recommendation app
 | Users can filter by Favorites ✅ | |
 
 # Test App
-You can click [here](https://appetize.io/embed/a6dpgv3qxdwjhrbjheu4cgs3fe?device=pixel7pro&osVersion=13.0&scale=50) to test Motion or download an APK from the releases section
+You can click [here](https://appetize.io/embed/vhut5chpstywutl3ecdw57awm4?device=pixel7pro&osVersion=13.0&scale=50) to test Motion or download an APK from the releases section
 
 # Make a Local build 🛠️
 1. Clone the repository ```https://github.com/judahben149/MotionTraction.git```
@@ -60,10 +60,7 @@ You can click [here](https://appetize.io/embed/a6dpgv3qxdwjhrbjheu4cgs3fe?device
 <img src="https://github.com/judahben149/MotionTraction/assets/71103838/703c8d4e-fe7e-44c0-b4c5-9da1cac6346e" width="200" alt="Filtered by Favorite movies - Dark Mode">
 
 
-
-
-
-
+# App Flow
 
 https://github.com/judahben149/MotionTraction/assets/71103838/040fa6e8-02e9-49b0-be3d-bb4091c1dcf4
 
