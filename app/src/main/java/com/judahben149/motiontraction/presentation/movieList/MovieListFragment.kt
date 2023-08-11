@@ -61,6 +61,7 @@ class MovieListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         toggleShimmer(true)
+
         updateOptionMenu()
         initViews()
         setListeners()
@@ -96,13 +97,17 @@ class MovieListFragment : Fragment() {
                 compDisposable.add(
                     state.movieList.subscribe { pagingData ->
                         movieListAdapter.submitData(lifecycle, pagingData)
+                        toggleShimmer(false)
                     }
                 )
             }
 
             state.favoriteMovieList?.let { favMoviesList ->
-                toggleShimmer(false)
-                favMoviesAdapter.submitList(favMoviesList)
+                if (favMoviesList.isNotEmpty()) {
+                    toggleShimmer(false)
+                    favMoviesAdapter.submitList(favMoviesList)
+                }
+
 
                 if (favMoviesList.isEmpty() && viewModel.state.value?.movieFilter == MovieFilter.FAVORITES)
                     binding.tvEmptyFavMovies.show()
