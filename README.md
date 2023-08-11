@@ -62,8 +62,11 @@ You can click [here](https://appetize.io/embed/vhut5chpstywutl3ecdw57awm4?device
 
 # App Flow
 
+### Light Mode
 https://github.com/judahben149/MotionTraction/assets/71103838/040fa6e8-02e9-49b0-be3d-bb4091c1dcf4
 
+### Dark Mode
+https://github.com/judahben149/MotionTraction/assets/71103838/9e8f1cbd-7721-44f1-b545-97b1faed1ab4
 
 
 
