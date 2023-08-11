@@ -8,7 +8,6 @@ import com.judahben149.motiontraction.domain.usecase.favoriteMovies.GetFavoriteM
 import com.judahben149.motiontraction.domain.usecase.movieList.GetMoviePagedListUseCase
 import com.judahben149.motiontraction.generateRandomFavoriteMovieEntityList
 import io.reactivex.Observable
-import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
@@ -47,13 +46,12 @@ class MovieListViewModelTest {
         val testSchedulerProvider = TestSchedulerProvider(testScheduler)
 
         viewModel = MovieListViewModel(mockMovieListUseCase, mockFavoriteMoviesUseCase, testSchedulerProvider)
-        viewModel.state.observeForever(observer) // Observe the LiveData state changes
+        viewModel.state.observeForever(observer)
     }
 
     @After
     fun teardown() {
-        RxJavaPlugins.reset()
-        viewModel.state.removeObserver(observer) // Clean up LiveData observer
+        viewModel.state.removeObserver(observer)
     }
 
     @Test
