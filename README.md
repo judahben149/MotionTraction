@@ -72,7 +72,7 @@ https://github.com/judahben149/MotionTraction/assets/71103838/19a2f078-3506-4a81
 
 # About the app
 
-* 100% Kotlin - Motion is built with Kotlin from top to bottom. This approach leverages on some of the benefits of Kotlin over Java
+* 100% Kotlin - Motion is built with Kotlin. This approach leverages on some of the benefits of Kotlin over Java, one of which is conciseness.
   
 * Asynchronous Programming with RX Java - The app leverages the power of RX Java to handle asynchronous operations efficiently, freeing up the main thread to handle UI operations. This ensures a smooth and responsive user experience.
 
@@ -92,7 +92,7 @@ https://github.com/judahben149/MotionTraction/assets/71103838/19a2f078-3506-4a81
 
 * Feedback for loading state - User experiance is enhanced by displaying shimmer in the bounds of the expected view area as opposed to progress bars. This is beneficial for user retention due to shorter perceived loading times.
 
-* Tests - Units in the various layers are well tested. Mockito is used for mocking and Google's Truth assertion library is used for making assertions.
+* Tests - Units in the various layers are well tested. Mockito is used for mocking and Google's Truth assertion library is used for making test assertions.
 
 
 
