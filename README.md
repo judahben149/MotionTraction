@@ -48,25 +48,26 @@ You can click [here](https://appetize.io/embed/vhut5chpstywutl3ecdw57awm4?device
 # App Screenshots
 
 ### Movie List
-<img src="https://github.com/judahben149/MotionTraction/assets/71103838/27ce7de4-ea64-4654-b333-bb1df0ed01b2" width="200" alt="Movie List screen - Light Mode">
-<img src="https://github.com/judahben149/MotionTraction/assets/71103838/0eaa87e6-c762-451e-9b08-66f9c043749e" width="200" alt="Movie List screen - Dark Mode">
+<img src="https://github.com/judahben149/MotionTraction/assets/71103838/adb64538-6117-4d92-8450-077f49a88b45" width="200" alt="Movie List screen - Light Mode">
+<img src="https://github.com/judahben149/MotionTraction/assets/71103838/4c654f1b-fbe7-44bf-96f6-666a863e6e47" width="200" alt="Movie List screen - Dark Mode">
 
 ### Movie Detail
-<img src="https://github.com/judahben149/MotionTraction/assets/71103838/093537ed-8933-4ff9-8146-cfb54c97a71a" width="200" alt="Movie Detail screen - Light Mode">
-<img src="https://github.com/judahben149/MotionTraction/assets/71103838/24b0194f-087a-4abe-a2ff-c8dfb9f8a60d" width="200" alt="Movie List screen - Dark Mode">
+<img src="https://github.com/judahben149/MotionTraction/assets/71103838/e6fc9a47-36cd-44d0-b180-5996d7bdfd9d" width="200" alt="Movie Detail screen - Light Mode">
+<img src="https://github.com/judahben149/MotionTraction/assets/71103838/2a8299b3-9c49-476b-b212-063b8196a6f2" width="200" alt="Movie List screen - Dark Mode">
 
 ### Filtered by favorite Movies
-<img src="https://github.com/judahben149/MotionTraction/assets/71103838/09e2899a-ad11-4abd-be54-f4f9ef390cb5" width="200" alt="Filtered by Favorite movies - Light Mode">
-<img src="https://github.com/judahben149/MotionTraction/assets/71103838/703c8d4e-fe7e-44c0-b4c5-9da1cac6346e" width="200" alt="Filtered by Favorite movies - Dark Mode">
+<img src="https://github.com/judahben149/MotionTraction/assets/71103838/528ef276-f639-45a8-87d0-7a406f9929b0" width="200" alt="Filtered by Favorite movies - Light Mode">
+<img src="https://github.com/judahben149/MotionTraction/assets/71103838/7fc0a677-9392-4e8e-93f9-279c9e03809e" width="200" alt="Filtered by Favorite movies - Dark Mode">
 
 
 # App Flow
 
 ### Light Mode
-https://github.com/judahben149/MotionTraction/assets/71103838/040fa6e8-02e9-49b0-be3d-bb4091c1dcf4
+https://github.com/judahben149/MotionTraction/assets/71103838/37430df6-5a76-4f16-ade7-54dc89b23e7e
 
 ### Dark Mode
-https://github.com/judahben149/MotionTraction/assets/71103838/9e8f1cbd-7721-44f1-b545-97b1faed1ab4
+
+https://github.com/judahben149/MotionTraction/assets/71103838/5657e3ea-19b3-4681-96b0-7528871f8c40
 
 
 
