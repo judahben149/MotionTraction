@@ -1,5 +1,5 @@
 # MotionTraction
-Motion is a movie recommendation app built to demonstrate knowledge of the required skills for the Android Engineer Position at Traction Apps.
+Motion is a movie recommendation applet built to demonstrate knowledge of the required skills for the Android Engineer Position at Traction Apps.
 ### CI Status
 ![Confirm APK build workflow](https://github.com/judahben149/MotionTraction/actions/workflows/build_apk_workflow.yml/badge.svg)
 
@@ -65,9 +65,6 @@ You can click [here](https://appetize.io/embed/vhut5chpstywutl3ecdw57awm4?device
 ### Light Mode
 https://github.com/judahben149/MotionTraction/assets/71103838/37430df6-5a76-4f16-ade7-54dc89b23e7e
 
-### Dark Mode
-
-https://github.com/judahben149/MotionTraction/assets/71103838/5657e3ea-19b3-4681-96b0-7528871f8c40
 
 
 
