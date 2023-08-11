@@ -136,9 +136,6 @@ dependencies {
     testImplementation("org.mockito:mockito-core:$mockitoVersion")
     testImplementation("org.mockito:mockito-inline:3.11.2")
     testImplementation("org.mockito:mockito-android:$mockitoVersion")
-    androidTestImplementation("org.mockito:mockito-core:$mockitoVersion")
-    androidTestImplementation("org.mockito:mockito-inline:3.11.2")
-    androidTestImplementation("org.mockito:mockito-android:$mockitoVersion")
 
     // J-Unit
     testImplementation("junit:junit:$jUnitVersion")
