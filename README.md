@@ -16,7 +16,7 @@ Motion is a movie recommendation applet built to demonstrate knowledge of the re
 | Clean Architectural Pattern ✅ | |
 | Users can filter by Favorites ✅ | |
 
-# Test App
+# Try out App
 You can click [here](https://appetize.io/embed/vhut5chpstywutl3ecdw57awm4?device=pixel7pro&osVersion=13.0&scale=50) to test Motion or download an APK from the releases section
 
 # Make a Local build 🛠️
@@ -70,7 +70,29 @@ https://github.com/judahben149/MotionTraction/assets/71103838/37430df6-5a76-4f16
 https://github.com/judahben149/MotionTraction/assets/71103838/19a2f078-3506-4a81-bf21-1e736486adb7
 
 
+# About the app
 
+* 100% Kotlin - Motion is built with Kotlin from top to bottom. This approach leverages on some of the benefits of Kotlin over Java
+  
+* Asynchronous Programming with RX Java - The app leverages the power of RX Java to handle asynchronous operations efficiently, freeing up the main thread to handle UI operations. This ensures a smooth and responsive user experience.
+
+* Caching with Paging Remote Mediator - To optimize data retrieval especially when the device is offline, the app employs the Paging 3 library's RX Remote Mediator for caching.
+
+* Effective Caching Strategy - The app employs a well-defined caching strategy to strike a balance between data freshness and storage efficiency. Cached data is intelligently managed and updated to provide users with the latest movie recommendations.
+
+* Offline Support - Movies which have been viewed are saved and can be viewed again when the device is offline. Favorite movies are also saved.
+
+* Separation of data - Data types at various layers are completely isolated only having mappers to convert between the various types. Kotlin extension functions were leveraged efficiently.
+
+* Proper Error Handling - Comprehensive error handling has been implemented to gracefully handle various scenarios, such as network errors, data inconsistencies, and user interactions. This ensures that users receive clear and informative error messages when needed.
+
+* Dependency Injection using Dagger-Hilt - The app follows the best practices of dependency injection by utilizing Dagger-Hilt. This powerful framework simplifies and centralizes the management of dependencies, promoting maintainable and testable code.
+
+* Epoxy RecyclerView for Enhanced UI - The user interface is built using Epoxy, a highly flexible and efficient library for creating complex RecyclerView layouts. Epoxy streamlines the process of building dynamic UI components, resulting in a visually appealing and interactive app interface.
+
+* Feedback for loading state - User experiance is enhanced by displaying shimmer in the bounds of the expected view area as opposed to progress bars. This is beneficial for user retention due to shorter perceived loading times.
+
+* Tests - Units in the various layers are well tested. Mockito is used for mocking and Google's Truth assertion library is used for making assertions.
 
 
 
