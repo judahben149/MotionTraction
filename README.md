@@ -26,7 +26,7 @@ You can click [here](https://appetize.io/embed/vhut5chpstywutl3ecdw57awm4?device
 4. Add in TMDB API key into your local.properties file
 5. Here's a test one you can use ```TMDB_API_KEY="0ca7e67bfaa50afa304af4a9bb6dbc93"```
 6. The Project should build and run successfully
-7. 7. To run tests, open the terminal and run this ```./gradlew test```
+7. To run tests, open the terminal and run this ```./gradlew test```
 
 # External Libraries used
 * Lifecycle (for ViewModel and LiveData)
