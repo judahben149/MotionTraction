@@ -64,6 +64,7 @@ dependencies {
     val mockitoVersion = "4.3.0"
     val jUnitVersion = "4.13.2"
     val truthVersion = "1.1.2"
+    val splashVersion = "1.0.1"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -80,6 +81,9 @@ dependencies {
 
     // Shimmer layout
     implementation("com.facebook.shimmer:shimmer:$shimmerVersion")
+
+    //Splash
+    implementation("androidx.core:core-splashscreen:$splashVersion")
 
     // Timber
     implementation("com.jakewharton.timber:timber:$timberVersion")
