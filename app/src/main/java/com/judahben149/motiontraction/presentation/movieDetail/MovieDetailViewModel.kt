@@ -8,6 +8,7 @@ import com.judahben149.motiontraction.data.source.local.entity.favoriteMovies.Fa
 import com.judahben149.motiontraction.data.source.local.entity.movieDetail.MovieDetailEntity
 import com.judahben149.motiontraction.domain.mappers.toCredits
 import com.judahben149.motiontraction.domain.mappers.toDetailMovie
+import com.judahben149.motiontraction.domain.scheduler.SchedulerProvider
 import com.judahben149.motiontraction.domain.usecase.credits.GetMovieCreditsUseCase
 import com.judahben149.motiontraction.domain.usecase.favoriteMovies.SaveFavoriteMovieUseCase
 import com.judahben149.motiontraction.domain.usecase.movieDetail.GetMovieDetailsUseCase
@@ -15,7 +16,6 @@ import com.judahben149.motiontraction.utils.OperationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -25,6 +25,7 @@ class MovieDetailViewModel @Inject constructor(
     private val detailsUseCase: GetMovieDetailsUseCase,
     private val creditsUseCase: GetMovieCreditsUseCase,
     private val saveFavoriteMovieUseCase: SaveFavoriteMovieUseCase,
+    private val schedulerProvider: SchedulerProvider
 ) : ViewModel() {
 
     private var _state: MutableLiveData<MovieDetailUiState> = MutableLiveData(MovieDetailUiState())
@@ -38,8 +39,8 @@ class MovieDetailViewModel @Inject constructor(
         Observable.merge(
             detailsUseCase.getMovieDetail(movieId).subscribeOn(Schedulers.io()),
             creditsUseCase.getMovieCredits(movieId).subscribeOn(Schedulers.io())
-        ).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        ).subscribeOn(schedulerProvider.io())
+            .observeOn(schedulerProvider.ui())
             .subscribe(getMovieObserver())
     }
 
