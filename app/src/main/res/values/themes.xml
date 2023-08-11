@@ -12,4 +12,10 @@
     <style name="ShapeAppearanceOverlay.App.CornerSize20Percent" parent="">
         <item name="cornerSize">26%</item>
     </style>
+
+    <style name="Theme.MotionSplashr" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenBackground">#FFFFFF</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_reel</item>
+        <item name="postSplashScreenTheme">@style/Theme.MotionTraction</item>
+    </style>
 </resources>

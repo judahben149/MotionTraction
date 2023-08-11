@@ -6,4 +6,10 @@
         <item name="colorSurface">#070707</item>
         <item name="android:windowBackground">@color/black</item>
     </style>
+
+    <style name="Theme.MotionSplashr" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#000000</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_reel</item>
+        <item name="postSplashScreenTheme">@style/Theme.MotionTraction</item>
+    </style>
 </resources>
