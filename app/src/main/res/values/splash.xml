@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<style name="Theme.MotionSplashr" parent="Theme.SplashScreen">-->
+<!--    <item name="windowSplashScreenBackground">#F65151</item>-->
+<!--    <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>-->
+<!--    <item name="postSplashScreenTheme">@style/Theme.MotionTraction</item>-->
+<!--</style>-->
+<resources>
+
+</resources>
