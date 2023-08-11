@@ -66,6 +66,9 @@ You can click [here](https://appetize.io/embed/vhut5chpstywutl3ecdw57awm4?device
 ### Light Mode
 https://github.com/judahben149/MotionTraction/assets/71103838/37430df6-5a76-4f16-ade7-54dc89b23e7e
 
+### Dark Mode
+https://github.com/judahben149/MotionTraction/assets/71103838/19a2f078-3506-4a81-bf21-1e736486adb7
+
 
 
 
